@@ -180,8 +180,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             elem5.className = "card text-center bg-dark";
             elem6.className = "dropdown-item bg-dark";
             elem7.className = "dropdown-item bg-dark";
-            elem8.className = "dropdown-item bg-dark";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
+            elem8.className = "dropdown-item bg-dark"; // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
           } else if (this.getCookie("theme") === "flatly") {
             elem1.className = "navbar navbar-expand-sm navbar-dark bg-primary";
             elem2.className = "dropdown-menu bg-primary";
@@ -190,8 +189,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             elem5.className = "card text-center bg-primary";
             elem6.className = "dropdown-item bg-primary";
             elem7.className = "dropdown-item bg-primary";
-            elem8.className = "dropdown-item bg-primary";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
+            elem8.className = "dropdown-item bg-primary"; // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
           }
         }
       }, {
@@ -215,8 +213,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             elem5.className = "card text-center bg-primary";
             elem6.className = "dropdown-item bg-primary";
             elem7.className = "dropdown-item bg-primary";
-            elem8.className = "dropdown-item bg-primary";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
+            elem8.className = "dropdown-item bg-primary"; // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
           } else if (this.getCookie("theme") === "flatly") {
             this.setCookie('theme', 'darkly');
             elem1.className = "navbar navbar-expand-sm navbar-dark bg-dark";
@@ -226,8 +223,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             elem5.className = "card text-center bg-dark";
             elem6.className = "dropdown-item bg-dark";
             elem7.className = "dropdown-item bg-dark";
-            elem8.className = "dropdown-item bg-dark";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
+            elem8.className = "dropdown-item bg-dark"; // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
           }
         }
       }, {

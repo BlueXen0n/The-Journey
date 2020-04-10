@@ -104,7 +104,7 @@ class AppComponent {
             elem6.className = "dropdown-item bg-dark";
             elem7.className = "dropdown-item bg-dark";
             elem8.className = "dropdown-item bg-dark";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
+            // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
         }
         else if (this.getCookie("theme") === "flatly") {
             elem1.className = "navbar navbar-expand-sm navbar-dark bg-primary";
@@ -115,7 +115,7 @@ class AppComponent {
             elem6.className = "dropdown-item bg-primary";
             elem7.className = "dropdown-item bg-primary";
             elem8.className = "dropdown-item bg-primary";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
+            // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
         }
     }
     ThemeChange() {
@@ -137,7 +137,7 @@ class AppComponent {
             elem6.className = "dropdown-item bg-primary";
             elem7.className = "dropdown-item bg-primary";
             elem8.className = "dropdown-item bg-primary";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
+            // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/flatly/bootstrap.min.css");
         }
         else if (this.getCookie("theme") === "flatly") {
             this.setCookie('theme', 'darkly');
@@ -149,7 +149,7 @@ class AppComponent {
             elem6.className = "dropdown-item bg-dark";
             elem7.className = "dropdown-item bg-dark";
             elem8.className = "dropdown-item bg-dark";
-            document.getElementById('stylesheet').setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
+            // (<HTMLInputElement>document.getElementById('stylesheet')).setAttribute('href', "https://bootswatch.com/4/darkly/bootstrap.min.css");
         }
     }
     getCookie(name) {
