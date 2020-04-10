@@ -359,7 +359,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       },
       directives: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkWithHref"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterLinkActive"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterOutlet"]],
-      styles: ["#collapsibleNavId[_ngcontent-%COMP%] { \n    height: 50px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtDQUNDLG9CQUFvQixrQkFBa0I7SUFDbkMsWUFBWTtBQUNoQiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4gI2NvbGxhcHNpYmxlTmF2SWQgeyAvKiBOYXZiYXIgaGVpZ2h0ICovXG4gICAgaGVpZ2h0OiA1MHB4O1xufSJdfQ== */"]
+      styles: ["#collapsibleNavId[_ngcontent-%COMP%] { \n    height: 50px;\n}\n\n#Theme1[_ngcontent-%COMP%] {\n    position: -webkit-sticky;\n    position: sticky;\n    top: 0;\n    z-index: 10;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXBwLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtDQUNDLG9CQUFvQixrQkFBa0I7SUFDbkMsWUFBWTtBQUNoQjs7QUFFQTtJQUNJLHdCQUFnQjtJQUFoQixnQkFBZ0I7SUFDaEIsTUFBTTtJQUNOLFdBQVc7QUFDZiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4gI2NvbGxhcHNpYmxlTmF2SWQgeyAvKiBOYXZiYXIgaGVpZ2h0ICovXG4gICAgaGVpZ2h0OiA1MHB4O1xufVxuXG4jVGhlbWUxIHtcbiAgICBwb3NpdGlvbjogc3RpY2t5O1xuICAgIHRvcDogMDtcbiAgICB6LWluZGV4OiAxMDtcbn0iXX0= */"]
     });
     /*@__PURE__*/
 
@@ -585,64 +585,115 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "Calculate",
         value: function Calculate() {
-          if (document.getElementById("cmIn").innerHTML === "in" && document.getElementById("kgLbs").innerHTML === "kg") {
-            var value;
-            value = this.height / 0.39370;
-            console.log("CM =" + value);
-            this.ResultsBSA = Math.sqrt(this.weight * value) / 60;
-            this.ResultsBMI = this.weight / Math.pow(value / 100, 2);
+          if (this.weight != null && this.height != null) {
+            if (document.getElementById("cmIn").innerHTML === "in" && document.getElementById("kgLbs").innerHTML === "kg") {
+              var value;
+              value = this.height / 0.39370;
+              console.log("CM =" + value);
+              this.ResultsBSA = Math.sqrt(this.weight * value) / 60;
+              this.ResultsBMI = this.weight / Math.pow(value / 100, 2);
 
-            if (this.targetBMI != null) {
-              this.targetBMIout = Math.pow(value / 100, 2) * this.targetBMI;
-              document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
-              console.log("Target BMI=" + this.targetBMIout);
+              if (this.targetBMI != null && this.targetBMI != 0) {
+                this.targetBMIout = Math.pow(value / 100, 2) * this.targetBMI;
+                document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
+                console.log("Target BMI=" + this.targetBMIout);
+              }
+            } else if (document.getElementById("kgLbs").innerHTML === "lbs" && document.getElementById("cmIn").innerHTML === "cm") {
+              var value;
+              value = this.weight / 2.2046;
+              console.log("KG =" + value);
+              this.ResultsBSA = Math.sqrt(value * this.height) / 60;
+              this.ResultsBMI = value / Math.pow(this.height / 100, 2);
+
+              if (this.targetBMI != null && this.targetBMI != 0) {
+                this.targetBMIout = Math.pow(this.height / 100, 2) * this.targetBMI;
+                document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
+                console.log("Target BMI=" + this.targetBMIout);
+              }
+            } else if (document.getElementById("kgLbs").innerHTML === "lbs" && document.getElementById("cmIn").innerHTML === "in") {
+              var weight1;
+              var height2;
+              height2 = this.height / 0.39370;
+              console.log("CM =" + height2);
+              weight1 = this.weight / 2.2046;
+              console.log("KG =" + weight1);
+              this.ResultsBSA = Math.sqrt(weight1 * height2) / 60;
+              this.ResultsBMI = weight1 / Math.pow(height2 / 100, 2);
+
+              if (this.ResultsBMI != null && this.targetBMI != 0) {
+                this.targetBMIout = Math.pow(height2 / 100, 2) * this.targetBMI;
+                document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
+                console.log("Target BMI=" + this.targetBMIout);
+              }
+            } else if (document.getElementById("kgLbs").innerHTML === "kg" && document.getElementById("cmIn").innerHTML === "cm") {
+              this.ResultsBSA = Math.sqrt(this.weight * this.height) / 60;
+              this.ResultsBMI = this.weight / Math.pow(this.height / 100, 2);
+
+              if (this.ResultsBMI != null && this.ResultsBMI != 0) {
+                this.targetBMIout = Math.pow(this.height / 100, 2) * this.targetBMI;
+                document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
+                console.log("Target BMI=" + this.targetBMIout);
+              }
             }
-          } else if (document.getElementById("kgLbs").innerHTML === "lbs" && document.getElementById("cmIn").innerHTML === "cm") {
-            var value;
-            value = this.weight / 2.2046;
-            console.log("KG =" + value);
-            this.ResultsBSA = Math.sqrt(value * this.height) / 60;
-            this.ResultsBMI = value / Math.pow(this.height / 100, 2);
 
-            if (this.targetBMI != null) {
-              this.targetBMIout = Math.pow(this.height / 100, 2) * this.targetBMI;
-              document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
-              console.log("Target BMI=" + this.targetBMIout);
+            document.getElementById("txt_4_0").style.display = "inline-block";
+            document.getElementById("txt_4_1").style.display = "inline-block";
+            document.getElementById("txt_4_2").style.display = "inline-block";
+
+            if (this.ResultsBMI != null && this.ResultsBMI != 0) {
+              document.getElementById("txt_4_0").innerHTML = "Body Mass Index: (" + this.judge() + ") " + this.ResultsBMI.toFixed(2) + " m²";
+              console.log("BMI=" + this.ResultsBMI);
+              document.getElementById("txt_4_3").style.display = "none";
             }
-          } else if (document.getElementById("kgLbs").innerHTML === "lbs" && document.getElementById("cmIn").innerHTML === "in") {
-            var weight1;
-            var height2;
-            height2 = this.height / 0.39370;
-            console.log("CM =" + height2);
-            weight1 = this.weight / 2.2046;
-            console.log("KG =" + weight1);
-            this.ResultsBSA = Math.sqrt(weight1 * height2) / 60;
-            this.ResultsBMI = weight1 / Math.pow(height2 / 100, 2);
 
-            if (this.targetBMI != null) {
-              this.targetBMIout = Math.pow(height2 / 100, 2) * this.targetBMI;
-              document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
-              console.log("Target BMI=" + this.targetBMIout);
-            }
-          } else if (document.getElementById("kgLbs").innerHTML === "kg" && document.getElementById("cmIn").innerHTML === "cm") {
-            this.ResultsBSA = Math.sqrt(this.weight * this.height) / 60;
-            this.ResultsBMI = this.weight / Math.pow(this.height / 100, 2);
-
-            if (this.targetBMI != null) {
-              this.targetBMIout = Math.pow(this.height / 100, 2) * this.targetBMI;
-              document.getElementById("txt_4_2").innerHTML = "Target weight for BMI " + this.targetBMI + " kg/m²: " + this.targetBMIout.toFixed(2) + " kg";
-              console.log("Target BMI=" + this.targetBMIout);
+            if (this.ResultsBSA != null && this.ResultsBSA != 0) {
+              document.getElementById("txt_4_1").innerHTML = "Body Surface Area: " + this.ResultsBSA.toFixed(2);
+              console.log("BSA=" + this.ResultsBSA);
+              document.getElementById("txt_4_3").style.display = "none";
             }
           }
 
-          document.getElementById("txt_4_0").style.display = "inline-block";
-          document.getElementById("txt_4_1").style.display = "inline-block";
-          document.getElementById("txt_4_2").style.display = "inline-block";
-          document.getElementById("txt_4_3").style.display = "none";
-          document.getElementById("txt_4_0").innerHTML = "Body Mass Index: (" + this.judge() + ") " + this.ResultsBMI.toFixed(2) + " m²";
-          document.getElementById("txt_4_1").innerHTML = "Body Surface Area: " + this.ResultsBSA.toFixed(2);
-          console.log("BMI=" + this.ResultsBMI);
-          console.log("BSA=" + this.ResultsBSA);
+          if (this.ResultsBMI === null || this.ResultsBMI === 0) {
+            document.getElementById("txt_4_0").style.display = "inline-block";
+          } else if (this.ResultsBSA === null || this.ResultsBSA === 0) {
+            document.getElementById("txt_4_1").style.display = "inline-block";
+          }
+
+          this.invalidHeight();
+          this.invalidweight(); // if (this.ResultsBMI = 1) {
+          //   document.getElementById("targetBMI").className = "form-control is-invalid"
+          // }
+        }
+      }, {
+        key: "invalidweight",
+        value: function invalidweight() {
+          if (this.weight < 1) {
+            document.getElementById("weight").className = "form-control is-invalid";
+            document.getElementById("warning1").innerHTML = "Very low; double-check.";
+          } else if (this.weight > 229) {
+            document.getElementById("weight").className = "form-control is-invalid";
+            document.getElementById("warning1").innerHTML = "Too high; please change to proceed.";
+          } else if (this.weight === null) {
+            document.getElementById("weight").className = "form-control";
+            document.getElementById("warning1").innerHTML = "";
+          }
+        } // 0-12 Very low; double-check.
+        // 204 -228 Very high; double-check.
+        // 229 -> Too high; please change to proceed.
+
+      }, {
+        key: "invalidHeight",
+        value: function invalidHeight() {
+          if (this.height < 20) {
+            document.getElementById("height").className = "form-control is-invalid";
+            document.getElementById("warning2").innerHTML = "Very low; double-check.";
+          } else if (this.height > 229) {
+            document.getElementById("height").className = "form-control is-invalid";
+            document.getElementById("warning2").innerHTML = "Too high; please change to proceed.";
+          } else {
+            document.getElementById("height").className = "form-control";
+            document.getElementById("warning2").innerHTML = "";
+          }
         }
       }, {
         key: "judge",
@@ -750,7 +801,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selectors: [["app-bmi-bsa"]],
       decls: 148,
       vars: 3,
-      consts: [["id", "Cstat"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], [1, "form-group", 2, "display", "inline-flex"], ["for", "amount1", 1, "control-label"], [1, "form-group"], [1, "input-group", "mb-3"], ["type", "text", "id", "weight", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange"], [1, "input-group-append"], [1, "input-group-text", 3, "click"], ["id", "kgLbs"], ["fill", "#1bb193", "viewBox", "0 0 13 13", "data-reactid", "265", 2, "width", "13px", "vertical-align", "middle", "margin-left", "5px", "cursor", "pointer"], ["d", "M12,6H1C0.6,6,0.3,5.8,0.1,5.5s-0.2-0.7,0-1l2.3-4c0.3-0.5,1-0.6,1.4-0.4C4.3,0.4,4.5,1,4.2,1.5L2.7,4H12c0.6,0,1,0.4,1,1 S12.6,6,12,6z", "data-reactid", "266"], ["d", "M1,7h11c0.4,0,0.7,0.2,0.9,0.5s0.2,0.7,0,1l-2.3,4c-0.3,0.5-0.9,0.6-1.4,0.4c-0.5-0.3-0.6-0.9-0.4-1.4L10.3,9H1   C0.4,9,0,8.6,0,8S0.4,7,1,7z", "data-reactid", "267"], ["for", "amount2", 1, "control-label"], ["type", "text", "id", "height", "placeholder", "Norm: 152-213", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange"], ["id", "cmIn"], ["for", "amount3", 1, "control-label"], ["type", "text", "id", "targetBMI", "placeholder", "Norm: 20-25", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange"], [1, "input-group-text"], ["type", "button", 1, "btn", "btn-primary", 3, "click"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-primary", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-primary", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "txt_4_3", 2, "display", "block"], ["id", "txt_4_0", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["id", "txt_4_1", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["id", "txt_4_2", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-outline-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], ["href", "http://www.nursingtimes.net/Journals/2014/10/10/n/p/l/141015Forty-years-on-updating-the-Glasgow-coma-scale.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", "", 1, "alert-link", 2, "white-space", "nowrap"]],
+      consts: [["id", "Cstat"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], [1, "form-group", 2, "display", "inline-flex"], ["for", "amount1", 1, "control-label"], [1, "form-group"], [1, "input-group", "mb-3"], ["type", "text", "id", "weight", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange", "input"], [1, "input-group-append"], [1, "input-group-text", 3, "click"], ["id", "kgLbs"], ["fill", "#1bb193", "viewBox", "0 0 13 13", "data-reactid", "265", 2, "width", "13px", "vertical-align", "middle", "margin-left", "5px", "cursor", "pointer"], ["d", "M12,6H1C0.6,6,0.3,5.8,0.1,5.5s-0.2-0.7,0-1l2.3-4c0.3-0.5,1-0.6,1.4-0.4C4.3,0.4,4.5,1,4.2,1.5L2.7,4H12c0.6,0,1,0.4,1,1 S12.6,6,12,6z", "data-reactid", "266"], ["d", "M1,7h11c0.4,0,0.7,0.2,0.9,0.5s0.2,0.7,0,1l-2.3,4c-0.3,0.5-0.9,0.6-1.4,0.4c-0.5-0.3-0.6-0.9-0.4-1.4L10.3,9H1   C0.4,9,0,8.6,0,8S0.4,7,1,7z", "data-reactid", "267"], ["id", "warning1", 1, "invalid-feedback"], ["for", "amount2", 1, "control-label"], [1, "form-group", "has-danger"], ["type", "text", "id", "height", "placeholder", "Norm: 152-213", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange", "input"], ["id", "cmIn"], ["id", "warning2", 1, "invalid-feedback"], ["for", "amount3", 1, "control-label"], ["type", "text", "id", "targetBMI", "placeholder", "Norm: 20-25", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange", "input"], [1, "input-group-text"], ["id", "warning3", 1, "invalid-feedback"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-info", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-info", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "txt_4_3", 2, "display", "block"], ["id", "txt_4_0", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["id", "txt_4_1", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["id", "txt_4_2", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["id", "viewMore", "type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], ["href", "http://www.nursingtimes.net/Journals/2014/10/10/n/p/l/141015Forty-years-on-updating-the-Glasgow-coma-scale.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", "", 1, "alert-link", 2, "white-space", "nowrap"]],
       template: function BmiBsaComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -803,6 +854,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BmiBsaComponent_Template_input_ngModelChange_20_listener($event) {
             return ctx.weight = $event;
+          })("input", function BmiBsaComponent_Template_input_input_20_listener() {
+            return ctx.Calculate();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -835,61 +888,59 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "div", 5);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "label", 16);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](30, "Height: ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](28, "div", 16);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](31, "div", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "div", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "input", 17);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BmiBsaComponent_Template_input_ngModelChange_33_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "label", 17);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "Height: ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "div", 18);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "div", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "input", 19);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BmiBsaComponent_Template_input_ngModelChange_34_listener($event) {
             return ctx.height = $event;
+          })("input", function BmiBsaComponent_Template_input_input_34_listener() {
+            return ctx.Calculate();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "div", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "div", 10);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "button", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "button", 11);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function BmiBsaComponent_Template_button_click_35_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function BmiBsaComponent_Template_button_click_36_listener() {
             return ctx.convertHeight();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "span", 18);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "span", 20);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](37, "cm");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38, "cm");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "svg", 13);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "svg", 13);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](39, "path", 14);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](40, "path", 14);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](40, "path", 15);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](41, "path", 15);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -899,63 +950,63 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](41, "div", 5);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "label", 19);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, "Target BMI: ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](44, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, " Optional, to determine weight required to achieve target BMI ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](42, "div", 21);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](46, "div", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](47, "div", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "input", 20);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](43, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BmiBsaComponent_Template_input_ngModelChange_48_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "label", 22);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, "Target BMI: ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](46, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](47, " Optional, to determine weight required to achieve target BMI ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "div", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "div", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "input", 23);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function BmiBsaComponent_Template_input_ngModelChange_50_listener($event) {
             return ctx.targetBMI = $event;
-          });
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "div", 10);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "span", 21);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](51, "kg/m\xB2");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](52, "div", 2);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](53, "button", 22);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function BmiBsaComponent_Template_button_click_53_listener() {
+          })("input", function BmiBsaComponent_Template_input_input_50_listener() {
             return ctx.Calculate();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](54, "Calculate");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "div", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](52, "span", 24);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, "kg/m\xB2");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](55, "hr");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "div", 23);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](54, "div", 25);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "button", 24);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](55, "div", 2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "div", 26);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "button", 27);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function BmiBsaComponent_Template_button_click_57_listener() {
             return ctx.Reset();
@@ -965,7 +1016,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "button", 25);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "button", 28);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function BmiBsaComponent_Template_button_click_59_listener() {
             return ctx.Print();
@@ -983,17 +1034,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](63, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](64, "div", 26);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](64, "div", 29);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "div", 27);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "div", 30);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](66, "Results:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](67, "div", 28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](67, "div", 31);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "p", 29);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "p", 32);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](69, "b");
 
@@ -1003,15 +1054,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](71, "p", 30);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](71, "p", 33);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](72, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](73, "p", 31);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](73, "p", 34);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](74, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](75, "p", 32);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](75, "p", 35);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1021,21 +1072,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](77, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](78, "button", 33);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](78, "button", 36);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](79, "svg", 34);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](79, "svg", 37);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](80, "path", 35);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](80, "path", 38);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](81, " View More ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](82, "svg", 34);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](82, "svg", 37);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](83, "path", 35);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](83, "path", 38);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -1047,7 +1098,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](85, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "div", 36);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "div", 39);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](87, "h3");
 
@@ -1055,7 +1106,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "div", 37);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "div", 40);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](90, "p");
 
@@ -1097,7 +1148,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "div", 37);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "div", 40);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](104, "ul");
 
@@ -1133,7 +1184,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "div", 37);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "div", 40);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](116, "ul");
 
@@ -1167,7 +1218,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](126, " (");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "a", 38);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "a", 41);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](128, "Teasdale 2014");
 
@@ -1189,7 +1240,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "div", 37);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "div", 40);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](135, "p");
 
@@ -1243,17 +1294,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.weight);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](13);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](14);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.height);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](16);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngModel", ctx.targetBMI);
         }
       },
       directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgModel"]],
-      styles: ["#Cstat[_ngcontent-%COMP%] { \n    text-align: center; \n}\n\nlabel[_ngcontent-%COMP%] {\n    display: block;\n    float: left;\n    clear: left;\n    width: 200px;\n    text-align: left;\n}\n\ninput[_ngcontent-%COMP%] {\n    display: block;\n    float: right;\n    width: 200px;\n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh5[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\n#button1[_ngcontent-%COMP%] {\n    border-radius: 4px 0 0 4px;\n}\n\n#button2[_ngcontent-%COMP%] {\n    border-radius: 0 4px 4px 0;\n}\n\n.switch-field[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] { \n    background-color: #434f5c;\n    color: rgb(231, 231, 231);\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.329);\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.400), 0 1px rgba(255, 255, 255, 0.1);\n    transition: all 0.1s ease-in-out;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    font-size: large;\n    padding: 1%;\n}\n\n#Levels[_ngcontent-%COMP%] {  \n    font-weight: bold; \n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -1%;\n}\n\n#Theme5[_ngcontent-%COMP%] { \n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0.5%;\n    color: #e0e0e0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYm1pLWJzYS9ibWktYnNhLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBLFNBQVMsNkNBQTZDO0lBQ2xELGtCQUFrQjtBQUN0Qjs7QUFFQTtJQUNJLGNBQWM7SUFDZCxXQUFXO0lBQ1gsV0FBVztJQUNYLFlBQVk7SUFDWixnQkFBZ0I7QUFDcEI7O0FBRUE7SUFDSSxjQUFjO0lBQ2QsWUFBWTtJQUNaLFlBQVk7QUFDaEI7O0FBRUEsSUFBSSxrQkFBa0I7SUFDbEIsWUFBWTtBQUNoQjs7QUFFQSxLQUFLLHlCQUF5QjtJQUMxQix3QkFBd0I7QUFDNUI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQTtJQUNJLDBCQUEwQjtBQUM5Qjs7QUFFQTtJQUNJLDBCQUEwQjtBQUM5Qjs7QUFFQSx1QkFBdUIsNENBQTRDO0lBQy9ELHlCQUF5QjtJQUN6Qix5QkFBeUI7SUFDekIsY0FBYztJQUNkLGtCQUFrQjtJQUNsQixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLHNDQUFzQztJQUN0QyxnRkFBZ0Y7SUFDaEYsZ0NBQWdDO0FBQ3BDOztBQUVBLGVBQWUsMkJBQTJCO0lBQ3RDLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsV0FBVztBQUNmOztBQUVBLFVBQVUsZ0NBQWdDO0lBQ3RDLGlCQUFpQjtBQUNyQjs7QUFFQSxXQUFXLHlCQUF5QjtJQUNoQyxXQUFXO0FBQ2Y7O0FBRUEsVUFBVSx3QkFBd0I7SUFDOUIsNENBQTRDO0lBQzVDLG9CQUFvQjtJQUNwQixZQUFZO0lBQ1osY0FBYztBQUNsQiIsImZpbGUiOiJzcmMvYXBwL2JtaS1ic2EvYm1pLWJzYS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4jQ3N0YXQgeyAvKiBBbGlnbnMgY29udGVudCB0byB0aGUgY2VudGVyIG9mIHRoZSBzaXRlICovXG4gICAgdGV4dC1hbGlnbjogY2VudGVyOyBcbn1cblxubGFiZWwge1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIGZsb2F0OiBsZWZ0O1xuICAgIGNsZWFyOiBsZWZ0O1xuICAgIHdpZHRoOiAyMDBweDtcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG5pbnB1dCB7XG4gICAgZGlzcGxheTogYmxvY2s7XG4gICAgZmxvYXQ6IHJpZ2h0O1xuICAgIHdpZHRoOiAyMDBweDtcbn1cblxucCB7IC8qIENvbXBhY3RzIHRleHQgKi9cbiAgICBtYXJnaW46IDAuMSU7XG59XG5cbmgxIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmgzIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmg1IHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbiNidXR0b24xIHtcbiAgICBib3JkZXItcmFkaXVzOiA0cHggMCAwIDRweDtcbn1cblxuI2J1dHRvbjIge1xuICAgIGJvcmRlci1yYWRpdXM6IDAgNHB4IDRweCAwO1xufVxuXG4uc3dpdGNoLWZpZWxkIGJ1dHRvbiB7IC8qIENoYW5nZXMgcmFkaW8gYnV0dG9ucyB0byB0b2dnbGUgYnV0dG9ucyAqL1xuICAgIGJhY2tncm91bmQtY29sb3I6ICM0MzRmNWM7XG4gICAgY29sb3I6IHJnYigyMzEsIDIzMSwgMjMxKTtcbiAgICBsaW5lLWhlaWdodDogMTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgcGFkZGluZzogOHB4IDE2cHg7XG4gICAgbWFyZ2luLXJpZ2h0OiAtMXB4O1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMC4zMjkpO1xuICAgIGJveC1zaGFkb3c6IGluc2V0IDAgMXB4IDNweCByZ2JhKDAsIDAsIDAsIDAuNDAwKSwgMCAxcHggcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xuICAgIHRyYW5zaXRpb246IGFsbCAwLjFzIGVhc2UtaW4tb3V0O1xufVxuXG4uY2FyZC1oZWFkZXIgeyAvKiBDaGFuZ2VzIFJlc3VsdHMgaGVhZGVyICovXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgZm9udC1zaXplOiBsYXJnZTtcbiAgICBwYWRkaW5nOiAxJTtcbn1cblxuI0xldmVscyB7IC8qIEdpdmVzIFJlc3VsdHMgQm9sZCBwcm9wZXJ0eSAqLyBcbiAgICBmb250LXdlaWdodDogYm9sZDsgXG59XG5cbiNSZXN1bHRzIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGJvZHkgKi9cbiAgICBtYXJnaW46IC0xJTtcbn1cblxuI1RoZW1lNSB7IC8qIENoYW5nZXMgUmVzdWx0cyBib3ggKi9cbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDEyOCwgMTI4LCAxMjgsIDAuNTA3KTtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBtYXJnaW46IDAuNSU7XG4gICAgY29sb3I6ICNlMGUwZTA7XG59XG4iXX0= */"]
+      styles: ["#Cstat[_ngcontent-%COMP%] { \n    text-align: center; \n}\n\n.was-validated[_ngcontent-%COMP%]   .form-control[_ngcontent-%COMP%]:invalid, .form-control.is-invalid[_ngcontent-%COMP%] {\n    width: 100px;\n}\n\nlabel[_ngcontent-%COMP%] {\n    display: block;\n    float: left;\n    clear: left;\n    width: 200px;\n    text-align: left;\n}\n\n#warning1[_ngcontent-%COMP%] {\n    width: 100px;\n}\n\n#warning2[_ngcontent-%COMP%] {\n    width: 100px;\n}\n\n#warning3[_ngcontent-%COMP%] {\n    width: 100px;\n}\n\ninput[_ngcontent-%COMP%] {\n    display: block;\n    float: right;\n    width: 200px;\n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh5[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\n#button1[_ngcontent-%COMP%] {\n    border-radius: 4px 0 0 4px;\n}\n\n#button2[_ngcontent-%COMP%] {\n    border-radius: 0 4px 4px 0;\n}\n\n#viewMore[_ngcontent-%COMP%] {\n    position: -webkit-sticky;\n    position: sticky;\n    top: 200px;\n    z-index: 1;\n}\n\n.switch-field[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] { \n    background-color: #434f5c;\n    color: rgb(231, 231, 231);\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.329);\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.400), 0 1px rgba(255, 255, 255, 0.1);\n    transition: all 0.1s ease-in-out;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    font-size: large;\n    padding: 1%;\n    position: -webkit-sticky;\n    position: sticky;\n}\n\n#Levels[_ngcontent-%COMP%] {  \n    font-weight: bold; \n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -2%;\n}\n\n#Theme5[_ngcontent-%COMP%] { \n    max-height: 135px;\n    position: -webkit-sticky;\n    position: sticky;\n    top: 55px;\n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0%;\n    color: #e0e0e0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYm1pLWJzYS9ibWktYnNhLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBLFNBQVMsNkNBQTZDO0lBQ2xELGtCQUFrQjtBQUN0Qjs7QUFFQTtJQUNJLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxjQUFjO0lBQ2QsV0FBVztJQUNYLFdBQVc7SUFDWCxZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksWUFBWTtBQUNoQjs7QUFFQTtJQUNJLFlBQVk7QUFDaEI7O0FBRUE7SUFDSSxZQUFZO0FBQ2hCOztBQUVBO0lBQ0ksY0FBYztJQUNkLFlBQVk7SUFDWixZQUFZO0FBQ2hCOztBQUVBLElBQUksa0JBQWtCO0lBQ2xCLFlBQVk7QUFDaEI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQSxLQUFLLHlCQUF5QjtJQUMxQix3QkFBd0I7QUFDNUI7O0FBRUE7SUFDSSwwQkFBMEI7QUFDOUI7O0FBRUE7SUFDSSwwQkFBMEI7QUFDOUI7O0FBRUE7SUFDSSx3QkFBZ0I7SUFBaEIsZ0JBQWdCO0lBQ2hCLFVBQVU7SUFDVixVQUFVO0FBQ2Q7O0FBRUEsdUJBQXVCLDRDQUE0QztJQUMvRCx5QkFBeUI7SUFDekIseUJBQXlCO0lBQ3pCLGNBQWM7SUFDZCxrQkFBa0I7SUFDbEIsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixzQ0FBc0M7SUFDdEMsZ0ZBQWdGO0lBQ2hGLGdDQUFnQztBQUNwQzs7QUFFQSxlQUFlLDJCQUEyQjtJQUN0QyxpQkFBaUI7SUFDakIsZ0JBQWdCO0lBQ2hCLFdBQVc7SUFDWCx3QkFBZ0I7SUFBaEIsZ0JBQWdCO0FBQ3BCOztBQUVBLFVBQVUsZ0NBQWdDO0lBQ3RDLGlCQUFpQjtBQUNyQjs7QUFFQSxXQUFXLHlCQUF5QjtJQUNoQyxXQUFXO0FBQ2Y7O0FBRUEsVUFBVSx3QkFBd0I7SUFDOUIsaUJBQWlCO0lBQ2pCLHdCQUFnQjtJQUFoQixnQkFBZ0I7SUFDaEIsU0FBUztJQUNULDRDQUE0QztJQUM1QyxvQkFBb0I7SUFDcEIsVUFBVTtJQUNWLGNBQWM7QUFDbEIiLCJmaWxlIjoic3JjL2FwcC9ibWktYnNhL2JtaS1ic2EuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuI0NzdGF0IHsgLyogQWxpZ25zIGNvbnRlbnQgdG8gdGhlIGNlbnRlciBvZiB0aGUgc2l0ZSAqL1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjsgXG59XG5cbi53YXMtdmFsaWRhdGVkIC5mb3JtLWNvbnRyb2w6aW52YWxpZCwgLmZvcm0tY29udHJvbC5pcy1pbnZhbGlkIHtcbiAgICB3aWR0aDogMTAwcHg7XG59XG5cbmxhYmVsIHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBmbG9hdDogbGVmdDtcbiAgICBjbGVhcjogbGVmdDtcbiAgICB3aWR0aDogMjAwcHg7XG4gICAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxuI3dhcm5pbmcxIHtcbiAgICB3aWR0aDogMTAwcHg7XG59XG5cbiN3YXJuaW5nMiB7XG4gICAgd2lkdGg6IDEwMHB4O1xufVxuXG4jd2FybmluZzMge1xuICAgIHdpZHRoOiAxMDBweDtcbn1cblxuaW5wdXQge1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIGZsb2F0OiByaWdodDtcbiAgICB3aWR0aDogMjAwcHg7XG59XG5cbnAgeyAvKiBDb21wYWN0cyB0ZXh0ICovXG4gICAgbWFyZ2luOiAwLjElO1xufVxuXG5oMSB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG5oMyB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG5oNSB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG4jYnV0dG9uMSB7XG4gICAgYm9yZGVyLXJhZGl1czogNHB4IDAgMCA0cHg7XG59XG5cbiNidXR0b24yIHtcbiAgICBib3JkZXItcmFkaXVzOiAwIDRweCA0cHggMDtcbn1cblxuI3ZpZXdNb3JlIHtcbiAgICBwb3NpdGlvbjogc3RpY2t5O1xuICAgIHRvcDogMjAwcHg7XG4gICAgei1pbmRleDogMTtcbn1cblxuLnN3aXRjaC1maWVsZCBidXR0b24geyAvKiBDaGFuZ2VzIHJhZGlvIGJ1dHRvbnMgdG8gdG9nZ2xlIGJ1dHRvbnMgKi9cbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNDM0ZjVjO1xuICAgIGNvbG9yOiByZ2IoMjMxLCAyMzEsIDIzMSk7XG4gICAgbGluZS1oZWlnaHQ6IDE7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIHBhZGRpbmc6IDhweCAxNnB4O1xuICAgIG1hcmdpbi1yaWdodDogLTFweDtcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDAsIDAsIDAsIDAuMzI5KTtcbiAgICBib3gtc2hhZG93OiBpbnNldCAwIDFweCAzcHggcmdiYSgwLCAwLCAwLCAwLjQwMCksIDAgMXB4IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcbiAgICB0cmFuc2l0aW9uOiBhbGwgMC4xcyBlYXNlLWluLW91dDtcbn1cblxuLmNhcmQtaGVhZGVyIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGhlYWRlciAqL1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIGZvbnQtc2l6ZTogbGFyZ2U7XG4gICAgcGFkZGluZzogMSU7XG4gICAgcG9zaXRpb246IHN0aWNreTtcbn1cblxuI0xldmVscyB7IC8qIEdpdmVzIFJlc3VsdHMgQm9sZCBwcm9wZXJ0eSAqLyBcbiAgICBmb250LXdlaWdodDogYm9sZDsgXG59XG5cbiNSZXN1bHRzIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGJvZHkgKi9cbiAgICBtYXJnaW46IC0yJTtcbn1cblxuI1RoZW1lNSB7IC8qIENoYW5nZXMgUmVzdWx0cyBib3ggKi9cbiAgICBtYXgtaGVpZ2h0OiAxMzVweDtcbiAgICBwb3NpdGlvbjogc3RpY2t5O1xuICAgIHRvcDogNTVweDtcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDEyOCwgMTI4LCAxMjgsIDAuNTA3KTtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBtYXJnaW46IDAlO1xuICAgIGNvbG9yOiAjZTBlMGUwO1xufVxuIl19 */"]
     });
     /*@__PURE__*/
 
@@ -1715,9 +1766,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     Covid19Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: Covid19Component,
       selectors: [["app-covid19"]],
-      decls: 263,
+      decls: 282,
       vars: 0,
-      consts: [["id", "Covid19"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], [1, "alert", "alert-dismissible", "alert-danger"], [2, "font-size", "x-large"], [1, "mb-0"], ["href", "https://www.mdcalc.com/covid-19", "target", "_blank", "rel", "noopener noreferrer", 1, "alert-link"], ["href", "https://www.mdcalc.com/covid-19/brescia-covid-respiratory-severity-scale-bcrss-interview", "target", "_blank", "rel", "noopener noreferrer", 1, "alert-link"], [1, "alert", "alert-dismissible", "alert-info"], [1, "alert", "alert-dismissible", "alert-light"], [1, "switch-field"], ["type", "radio", "id", "criteria_2_0-no", "name", "criteria_2_0", 1, "btn", "btn-outline-info", 3, "change"], ["for", "criteria_2_0-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_0-yes", "name", "criteria_2_0", 3, "change"], ["for", "criteria_2_0-yes", 1, "switch-field"], ["type", "radio", "id", "criteria_2_1-no", "name", "criteria_2_1", 3, "change"], ["for", "criteria_2_1-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_1-yes", "name", "criteria_2_1", 3, "change"], ["for", "criteria_2_1-yes", 1, "switch-field"], ["type", "radio", "id", "criteria_2_2-no", "name", "criteria_2_2", 3, "change"], ["for", "criteria_2_2-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_2-yes", "name", "criteria_2_2", 3, "change"], ["for", "criteria_2_2-yes", 1, "switch-field"], ["title", "Chest X-ray", 1, "tooltip1"], ["type", "radio", "id", "criteria_2_3-no", "name", "criteria_2_3", 3, "change"], ["for", "criteria_2_3-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_3-yes", "name", "criteria_2_3", 3, "change"], ["for", "criteria_2_3-yes", 1, "switch-field"], ["id", "criteria_2_4d", 2, "display", "none"], ["type", "radio", "id", "criteria_2_4-no", "name", "criteria_2_4", 3, "change"], ["for", "criteria_2_4-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_4-yes", "name", "criteria_2_4", 3, "change"], ["for", "criteria_2_4-yes", 1, "switch-field"], ["id", "criteria_2_5d", 2, "display", "none"], ["title", "Continuous mandatory ventilation", 1, "tooltip1"], ["type", "radio", "id", "criteria_2_5-no", "name", "criteria_2_5", 3, "change"], ["for", "criteria_2_5-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_5-yes", "name", "criteria_2_5", 3, "change"], ["for", "criteria_2_5-yes", 1, "switch-field"], ["id", "criteria_2_6d", 2, "display", "none"], ["href", "https://www.mdcalc.com/horowitz-index-lung-function-p-f-ratio"], ["type", "radio", "id", "criteria_2_6-no", "name", "criteria_2_6", 3, "change"], ["for", "criteria_2_6-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_6-yes", "name", "criteria_2_6", 3, "change"], ["for", "criteria_2_6-yes", 1, "switch-field"], ["id", "criteria_2_7d", 2, "display", "none"], ["type", "radio", "id", "criteria_2_7-no", "name", "criteria_2_7", 3, "change"], ["for", "criteria_2_7-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_7-yes", "name", "criteria_2_7", 3, "change"], ["for", "criteria_2_7-yes", 1, "switch-field"], ["id", "criteria_2_8d", 2, "display", "none"], ["type", "radio", "id", "criteria_2_8-no", "name", "criteria_2_8", 3, "change"], ["for", "criteria_2_8-no", 1, "switch-field"], ["type", "radio", "id", "criteria_2_8-yes", "name", "criteria_2_8", 3, "change"], ["for", "criteria_2_8-yes", 1, "switch-field"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-primary", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-primary", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "Levels", 2, "font-size", "large"], ["id", "Management_2_1"], ["id", "Medications_2_1"], ["type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-outline-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], [2, "text-align", "center", "display", "inline-block"], [2, "text-align", "lcenter", "display", "inline-block"], ["href", "https://cdn-web-img.mdcalc.com/content/BRSS_A4.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", ""], ["target", "_blank", "rel", "noopener noreferrer", "href", "https://cdn-web-img.mdcalc.com/content/BRSS_A4-1.png"], ["src", "https://cdn-web-img.mdcalc.com/content/BRSS_A4-1.png", "alt", "BRSS"], ["href", "https://www.eahp.eu/sites/default/files/linee_guida_sulla_gestione_terapeutica_e_di_supporto_per_pazienti_con_infezione_da_coronavirus_covid-19.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", ""], ["href", "https://www.mdcalc.com/brescia-covid-respiratory-severity-scale-bcrss-algorithm", "target", "_blank", "rel", "noopener noreferrer", "download", ""]],
+      consts: [["id", "Covid19"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], [1, "alert", "alert-dismissible", "alert-danger"], [2, "font-size", "x-large"], [1, "mb-0"], ["href", "https://www.mdcalc.com/covid-19", "target", "_blank", "rel", "noopener noreferrer", 1, "alert-link"], ["href", "https://www.mdcalc.com/covid-19/brescia-covid-respiratory-severity-scale-bcrss-interview", "target", "_blank", "rel", "noopener noreferrer", 1, "alert-link"], [1, "alert", "alert-dismissible", "alert-info"], [1, "alert", "alert-dismissible", "alert-light"], ["data-toggle", "buttons", 1, "btn-group", "btn-group-toggle"], [1, "btn", "btn-info", "active"], ["type", "radio", "name", "criteria_2_0", "id", "criteria_2_0-no", "autocomplete", "off", "checked", "", 3, "click"], [1, "btn", "btn-info"], ["type", "radio", "name", "criteria_2_0", "id", "criteria_2_0-yes", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_2_1", "id", "criteria_2_1-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_2_1", "id", "criteria_2_1-yes", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_2_2", "id", "criteria_2_2-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_2_2", "id", "criteria_2_2-yes", "autocomplete", "off", 3, "click"], ["title", "Chest X-ray", 1, "tooltip1"], ["type", "radio", "name", "criteria_2_3", "id", "criteria_2_3-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_2_3", "id", "criteria_2_3-yes", "autocomplete", "off", 3, "click"], ["id", "criteria_2_4d", 2, "display", "none"], ["type", "radio", "name", "criteria_2_4", "id", "criteria_2_4-no", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_2_4", "id", "criteria_2_4-yes", "autocomplete", "off", 3, "click"], ["id", "criteria_2_5d", 2, "display", "none"], ["title", "Continuous mandatory ventilation", 1, "tooltip1"], ["type", "radio", "name", "criteria_2_5", "id", "criteria_2_5-no", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_2_5", "id", "criteria_2_5-yes", "autocomplete", "off", 3, "click"], ["id", "criteria_2_6d", 2, "display", "none"], ["href", "https://www.mdcalc.com/horowitz-index-lung-function-p-f-ratio"], ["type", "radio", "name", "criteria_2_6", "id", "criteria_2_6-no", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_2_6", "id", "criteria_2_6-yes", "autocomplete", "off", 3, "click"], ["id", "criteria_2_7d", 2, "display", "none"], ["type", "radio", "name", "criteria_2_7", "id", "criteria_2_7-no", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_2_7", "id", "criteria_2_7-yes", "autocomplete", "off", 3, "click"], ["id", "criteria_2_8d", 2, "display", "none"], ["type", "radio", "name", "criteria_2_8", "id", "criteria_2_8-no", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_2_8", "id", "criteria_2_8-yes", "autocomplete", "off", 3, "click"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-info", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-info", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "Levels", 2, "font-size", "large"], ["id", "Management_2_1"], ["id", "Medications_2_1"], ["id", "viewMore", "type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], [2, "text-align", "center", "display", "inline-block"], [2, "text-align", "lcenter", "display", "inline-block"], ["href", "https://cdn-web-img.mdcalc.com/content/BRSS_A4.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", ""], ["target", "_blank", "rel", "noopener noreferrer", "href", "https://cdn-web-img.mdcalc.com/content/BRSS_A4-1.png"], ["src", "https://cdn-web-img.mdcalc.com/content/BRSS_A4-1.png", "alt", "BRSS"], ["href", "https://www.eahp.eu/sites/default/files/linee_guida_sulla_gestione_terapeutica_e_di_supporto_per_pazienti_con_infezione_da_coronavirus_covid-19.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", ""], ["href", "https://www.mdcalc.com/brescia-covid-respiratory-severity-scale-bcrss-algorithm", "target", "_blank", "rel", "noopener noreferrer", "download", ""]],
       template: function Covid19Component_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -1874,229 +1925,251 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](53, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](53, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "input", 13);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_54_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "label", 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "input", 14);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_56_listener() {
             return ctx.CheckResults0();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "label", 14);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](56, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "input", 15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_57_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "input", 16);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_59_listener() {
             return ctx.CheckResults0();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "label", 16);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](59, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](60, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](61, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, "Respiratory rate >22:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](62, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](64, "Respiratory rate >22:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](62, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](65, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "input", 17);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](66, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_63_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](67, "label", 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "input", 17);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_68_listener() {
             return ctx.CheckResults1();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](64, "label", 18);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](65, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](69, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](66, "input", 19);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](70, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_66_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](71, "input", 18);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_71_listener() {
             return ctx.CheckResults1();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](67, "label", 20);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](68, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](72, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](69, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](73, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](70, "PaO");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](74, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](71, "sub");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](75, "label");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](72, "2");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](76, "PaO");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](77, "sub");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](73, " <65 mmHg or SpO");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](74, "sub");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](75, "2");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](78, "2");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](76, " <90%: ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](79, " <65 mmHg or SpO");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](80, "sub");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](81, "2");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](77, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](82, " <90%:");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](78, "input", 21);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_78_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](83, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](84, "div", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](85, "label", 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "input", 19);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_86_listener() {
             return ctx.CheckResults2();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](79, "label", 22);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](80, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](87, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](81, "input", 23);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](88, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_81_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "input", 20);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_89_listener() {
             return ctx.CheckResults2();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](82, "label", 24);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](83, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](90, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](84, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](91, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](85, "Repeat ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](92, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "span", 25);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](93, "label");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](87, "CXR");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](94, "Repeat ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](95, "span", 21);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](96, "CXR");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](88, " is significantly worsening:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](97, " is significantly worsening:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](98, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](90, "input", 26);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_90_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](100, "label", 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](101, "input", 22);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_101_listener() {
             return ctx.CheckResults3();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](91, "label", 27);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](92, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](102, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](93, "input", 28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_93_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](104, "input", 23);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_104_listener() {
             return ctx.CheckResults3();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](94, "label", 29);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](95, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](105, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](96, "div", 30);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](106, "div", 24);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](97, "hr");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](107, "hr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](98, "div", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](108, "div", 11);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "p", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](109, "p", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](100, " When >2 criteria are selected, algorithm recommends escalating to non-invasive ventilation ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](110, " When >2 criteria are selected, algorithm recommends escalating to non-invasive ventilation ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](101, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](111, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](102, " (NIV/CPAP/BiPAP) or high-flow nasal cansula (HFNC), and then reassessing patient criteria");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](112, " (NIV/CPAP/BiPAP) or high-flow nasal cansula (HFNC), and then reassessing patient criteria");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](103, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](104, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](113, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](105, "Does patient still have >2 criteria despite NIV/HFNC?:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](114, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](115, "Does patient still have >2 criteria despite NIV/HFNC?:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](106, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](116, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](107, "input", 31);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](117, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_107_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](118, "label", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](119, "input", 25);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_119_listener() {
             return ctx.CheckResults4no();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](108, "label", 32);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](109, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](120, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](110, "input", 33);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](121, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_110_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](122, "input", 26);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_122_listener() {
             return ctx.CheckResults4yes();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](111, "label", 34);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](112, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](123, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2104,65 +2177,67 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](113, "div", 35);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](124, "div", 27);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](114, "hr");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](125, "hr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "div", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](126, "div", 11);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](116, "p", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "p", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](117, " Intubation recommended for worsening symptoms despite NIV/HFNC. ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](128, " Intubation recommended for worsening symptoms despite NIV/HFNC. ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](118, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](129, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, " With the patient intubated:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](120, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](121, "label");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](122, "Is the intubated patient on ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](123, "span", 36);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](124, "CMV");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](130, " With the patient intubated:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](125, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](131, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](126, "input", 37);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](132, "label");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_126_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](133, "Is the intubated patient on ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "span", 28);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](135, "CMV");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](136, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](137, "div", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](138, "label", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](139, "input", 29);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_139_listener() {
             return ctx.CheckResults5();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "label", 38);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](128, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](140, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](129, "input", 39);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](141, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_129_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](142, "input", 30);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_142_listener() {
             return ctx.CheckResults5();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](130, "label", 40);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](131, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](143, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2170,63 +2245,65 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](132, "div", 41);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](144, "div", 31);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](133, "hr");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](145, "hr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](146, "label");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](135, "a", 42);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](147, "a", 32);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](136, "PaO");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](148, "PaO");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](137, "sub");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](149, "sub");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](138, "2");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](139, "/FiO");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](140, "sub");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](141, "2");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](150, "2");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](151, "/FiO");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](152, "sub");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](153, "2");
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](142, " <150 mmHg:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](154, " <150 mmHg:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](143, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](155, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](144, "input", 43);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](156, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_144_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](157, "label", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](158, "input", 33);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_158_listener() {
             return ctx.CheckResults6();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](145, "label", 44);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](146, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](159, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](147, "input", 45);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](160, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_147_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](161, "input", 34);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_161_listener() {
             return ctx.CheckResults6();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](148, "label", 46);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](149, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](162, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2234,41 +2311,45 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](150, "div", 47);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](163, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](151, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](164, "div", 35);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](152, "Patient on neuromuscular blockade (NMBA):");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](165, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](166, "Patient on neuromuscular blockade (NMBA):");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](153, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](167, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](154, "input", 48);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](168, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_154_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](169, "label", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](170, "input", 36);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_170_listener() {
             return ctx.CheckResults7();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](155, "label", 49);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](156, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](171, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](157, "input", 50);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](172, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_157_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](173, "input", 37);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_173_listener() {
             return ctx.CheckResults7();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](158, "label", 51);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](159, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](174, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2276,41 +2357,45 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](160, "div", 52);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](175, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](161, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](176, "div", 38);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](162, "Patient prone or on ECMO:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](177, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](178, "Patient prone or on ECMO:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](163, "div", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](179, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](164, "input", 53);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](180, "div", 12);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_164_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](181, "label", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](182, "input", 39);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_182_listener() {
             return ctx.CheckResults8();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](165, "label", 54);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](166, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](183, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](167, "input", 55);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](184, "label", 15);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Covid19Component_Template_input_change_167_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](185, "input", 40);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_input_click_185_listener() {
             return ctx.CheckResults8();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](168, "label", 56);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](169, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](186, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2318,73 +2403,77 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](170, "div", 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](187, "hr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](171, "div", 57);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](188, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](172, "button", 58);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](189, "div", 41);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_button_click_172_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](190, "button", 42);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_button_click_190_listener() {
             return ctx.Reset();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](173, "Reset");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](191, "Reset");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](174, "button", 59);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](192, "button", 43);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_button_click_174_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Covid19Component_Template_button_click_192_listener() {
             return ctx.Print();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](175, "Print");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](193, "Print");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](176, "div", 60);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](194, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](177, "div", 61);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](195, "div", 44);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](178, " Results: ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](196, "div", 45);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](179, "div", 62);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](180, "p", 63);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](181, "p", 64);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](182, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](183, "p", 65);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](197, " Results: ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](198, "div", 46);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](199, "p", 47);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](200, "p", 48);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](201, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](202, "p", 49);
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](184, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](185, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](203, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](186, "button", 66);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](204, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](205, "button", 50);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](187, "svg", 67);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](206, "svg", 51);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](188, "path", 68);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](207, "path", 52);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](189, " View More ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](208, " View More ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](190, "svg", 67);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](209, "svg", 51);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](191, "path", 68);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](210, "path", 52);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2392,167 +2481,167 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](192, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](211, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](193, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](212, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](194, "div", 69);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](213, "div", 53);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](195, "h3");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](214, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](196, "Advice:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](197, "div", 70);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](198, "ul");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](199, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](200, "Healthcare workers must be aware that COVID-19 information is rapidly changing; ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](201, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](202, " We will attempt to update this score as frequently as possible to keep up with the rapidly changing nature of this pandemic. ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](215, "Advice:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](203, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](216, "div", 54);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](204, "While this score certainly would indicate increasing levels of respiratory severity, ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](217, "ul");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](205, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](218, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](206, " one's local hospital recommendations or drug availability may provide different recommendations for treatment.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](219, "Healthcare workers must be aware that COVID-19 information is rapidly changing; ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](220, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](207, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](208, "h3");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](209, "Management:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](221, " We will attempt to update this score as frequently as possible to keep up with the rapidly changing nature of this pandemic. ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](210, "div", 71);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](222, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](211, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](223, "While this score certainly would indicate increasing levels of respiratory severity, ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](212, "This score is meant to be dynamic and frequently reassessed and re-scored after interventions; ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](224, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](213, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](214, " frequency of reassessment is by clinical judgment. ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](215, " A brand new patient in the ED may need to be reassessed every 15 minutes, for example, ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](216, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](217, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](218, "while a stable patient on the medical floor may only need reassessment every 6-12 hours. ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](219, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](220, "If a patient is assigned a new score based on these criteria, the medical and respiratory management should then change as well.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](225, " one's local hospital recommendations or drug availability may provide different recommendations for treatment.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](221, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](222, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](226, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](223, "h3");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](227, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](224, "Evidence appraisal:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](228, "Management:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](225, "div", 72);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](229, "div", 55);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](226, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](230, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](227, " This score has not been externally validated and is being published on The-Journey as one way to easily assess and compare patients in a time of crisis.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](231, "This score is meant to be dynamic and frequently reassessed and re-scored after interventions; ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](232, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](228, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](229, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](230, "h3");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](231, "Formula:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](233, " frequency of reassessment is by clinical judgment. ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](232, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](234, " A brand new patient in the ED may need to be reassessed every 15 minutes, for example, ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](233, "a", 73);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](235, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](234, "Brescia-COVID Treatment Algorithm");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](236, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](235, "a", 74);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](236, "img", 75);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](237, "while a stable patient on the medical floor may only need reassessment every 6-12 hours. ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](237, "div", 70);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](238, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](239, "*Inclusion criteria for tocilizumab:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](240, "ol");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](241, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](242, " End of the initial phase of high viral load of COVID-19 (e.g. apyretic from >72h and/or elapsed \u22657 days after the onset of symptoms).");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](243, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](244, " Worsening of respiratory exchanges, such as to require non-invasive or invasive support from ventilation (Level \u22653).");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](245, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](246, " High levels of IL-6 (>40 pg/mL); alternatively high levels of d-dimer, CRP, ferritin, and/or fibrinogen progressively increasing.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](239, "If a patient is assigned a new score based on these criteria, the medical and respiratory management should then change as well.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](247, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](240, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](248, "From ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](241, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](249, "a", 73);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](242, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](250, "Italy's latest SIMIT Guidelines.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](243, "Evidence appraisal:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](244, "div", 56);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](245, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](246, " This score has not been externally validated and is being published on The-Journey as one way to easily assess and compare patients in a time of crisis.");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](247, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](248, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](249, "h3");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](250, "Formula:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](251, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](252, "a", 57);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](253, "Brescia-COVID Treatment Algorithm");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](254, "a", 58);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](255, "img", 59);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](256, "div", 54);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](257, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](258, "*Inclusion criteria for tocilizumab:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](259, "ol");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](260, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](261, " End of the initial phase of high viral load of COVID-19 (e.g. apyretic from >72h and/or elapsed \u22657 days after the onset of symptoms).");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](262, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](263, " Worsening of respiratory exchanges, such as to require non-invasive or invasive support from ventilation (Level \u22653).");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](264, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](265, " High levels of IL-6 (>40 pg/mL); alternatively high levels of d-dimer, CRP, ferritin, and/or fibrinogen progressively increasing.");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](266, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](267, "From ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](268, "a", 57);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](269, "Italy's latest SIMIT Guidelines.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2560,43 +2649,43 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](251, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](270, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](252, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](271, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](253, "h5");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](272, "h5");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](254, "References:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](255, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](256, "a", 76);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](257, "SIMIT Guidelines");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](273, "References:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](274, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](258, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](275, "a", 60);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](259, "a", 77);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](260, "MDCalc's BCRSS");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](276, "SIMIT Guidelines");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](261, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](277, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](278, "a", 61);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](279, "MDCalc's BCRSS");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](262, "div", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](280, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](281, "div", 3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2605,7 +2694,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         }
       },
-      styles: ["#Covid19[_ngcontent-%COMP%] { \n    text-align: center; \n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\na[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n    text-decoration: underline;\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh5[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nul[_ngcontent-%COMP%] {\n    text-align: left;\n    \n}\n\nol[_ngcontent-%COMP%] { \n    display: inline-block; \n}\n\n#PrintButton[_ngcontent-%COMP%]{\n    margin: 20% 0 20% 0;\n    display: block; \n    justify-content: center;\n}\n\n#ResetButton[_ngcontent-%COMP%] {\n    margin: 20% 0 20% 0;\n    \n    display: block; \n    justify-content: center;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    padding: 1%;\n}\n\n#Levels[_ngcontent-%COMP%] {  \n    font-weight: bold; \n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -1%;\n}\n\n#Theme5[_ngcontent-%COMP%] { \n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0.5%;\n    color: #e0e0e0;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] { \n    position: absolute !important;\n    clip: rect(0, 0, 0, 0);\n    height: 1px; \n    width: 1px;\n    border: 0;\n    overflow: hidden;\n}\n\n.switch-field[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] { \n    background-color: #434f5c;\n    color: rgb(231, 231, 231);\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.329);\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.400), 0 1px rgba(255, 255, 255, 0.1);\n    transition: all 0.1s ease-in-out;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%] { \n    background-color: #434f5c;\n    color: #e0e0e0;\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.507), 0 1px rgba(255, 255, 255, 0);\n    transition: all 0.1s ease-in-out;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:hover { \n    cursor: pointer;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]:checked    + label[_ngcontent-%COMP%] { \n    background-color: #20adffce;\n    box-shadow: none;\n    color: rgba(0, 0, 0, 0.6);\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:first-of-type { \n    border-radius: 4px 0 0 4px;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:last-of-type { \n    border-radius: 0 4px 4px 0;\n}\n\n.alert[_ngcontent-%COMP%] { \n    display: inline-block;\n}\n\n.tooltip1[_ngcontent-%COMP%] {\n    color: rgb(33, 118, 175);\n    border-bottom: 1px dotted rgb(33, 118, 175);\n}\n\nimg[_ngcontent-%COMP%] {\n    height: 100%;\n    width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY292aWQxOS9jb3ZpZDE5LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBLFdBQVcsNkNBQTZDO0lBQ3BELGtCQUFrQjtBQUN0Qjs7QUFFQSxJQUFJLGtCQUFrQjtJQUNsQixZQUFZO0FBQ2hCOztBQUVBLElBQUksdUJBQXVCO0lBQ3ZCLHdCQUF3QjtJQUN4QiwwQkFBMEI7QUFDOUI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQSxLQUFLLHlCQUF5QjtJQUMxQix3QkFBd0I7QUFDNUI7O0FBRUE7SUFDSSxnQkFBZ0I7SUFDaEIsNEJBQTRCO0FBQ2hDOztBQUVBLEtBQUssMkJBQTJCO0lBQzVCLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLG1CQUFtQjtJQUNuQixjQUFjO0lBQ2QsdUJBQXVCO0FBQzNCOztBQUVBO0lBQ0ksbUJBQW1CO0lBQ25CLHVCQUF1QjtJQUN2QixjQUFjO0lBQ2QsdUJBQXVCO0FBQzNCOztBQUVBLGVBQWUsMkJBQTJCO0lBQ3RDLGlCQUFpQjtJQUNqQixXQUFXO0FBQ2Y7O0FBRUEsVUFBVSxnQ0FBZ0M7SUFDdEMsaUJBQWlCO0FBQ3JCOztBQUVBLFdBQVcseUJBQXlCO0lBQ2hDLFdBQVc7QUFDZjs7QUFFQSxVQUFVLHdCQUF3QjtJQUM5Qiw0Q0FBNEM7SUFDNUMsb0JBQW9CO0lBQ3BCLFlBQVk7SUFDWixjQUFjO0FBQ2xCOztBQUVBLHNCQUFzQiw0Q0FBNEM7SUFDOUQsNkJBQTZCO0lBQzdCLHNCQUFzQjtJQUN0QixXQUFXO0lBQ1gsVUFBVTtJQUNWLFNBQVM7SUFDVCxnQkFBZ0I7QUFDcEI7O0FBRUEsdUJBQXVCLDRDQUE0QztJQUMvRCx5QkFBeUI7SUFDekIseUJBQXlCO0lBQ3pCLGNBQWM7SUFDZCxrQkFBa0I7SUFDbEIsaUJBQWlCO0lBQ2pCLGtCQUFrQjtJQUNsQixzQ0FBc0M7SUFDdEMsZ0ZBQWdGO0lBQ2hGLGdDQUFnQztBQUNwQzs7QUFFQSxzQkFBc0IsNENBQTRDO0lBQzlELHlCQUF5QjtJQUN6QixjQUFjO0lBQ2QsY0FBYztJQUNkLGtCQUFrQjtJQUNsQixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLG9DQUFvQztJQUNwQyxnRkFBZ0Y7SUFDaEYsZ0NBQWdDO0FBQ3BDOztBQUVBLDRCQUE0Qiw0Q0FBNEM7SUFDcEUsZUFBZTtBQUNuQjs7QUFFQSxzQ0FBc0MsNENBQTRDO0lBQzlFLDJCQUEyQjtJQUMzQixnQkFBZ0I7SUFDaEIseUJBQXlCO0FBQzdCOztBQUVBLG9DQUFvQyw0Q0FBNEM7SUFDNUUsMEJBQTBCO0FBQzlCOztBQUVBLG1DQUFtQyw0Q0FBNEM7SUFDM0UsMEJBQTBCO0FBQzlCOztBQUVBLFNBQVMsNkNBQTZDO0lBQ2xELHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLHdCQUF3QjtJQUN4QiwyQ0FBMkM7QUFDL0M7O0FBRUE7SUFDSSxZQUFZO0lBQ1osV0FBVztBQUNmIiwiZmlsZSI6InNyYy9hcHAvY292aWQxOS9jb3ZpZDE5LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbiNDb3ZpZDE5IHsgLyogQWxpZ25zIGNvbnRlbnQgdG8gdGhlIGNlbnRlciBvZiB0aGUgc2l0ZSAqL1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjsgXG59XG5cbnAgeyAvKiBDb21wYWN0cyB0ZXh0ICovXG4gICAgbWFyZ2luOiAwLjElO1xufVxuXG5hIHsgLyogQ2hhbmdlcyBsaW5rIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xuICAgIHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lO1xufVxuXG5oMSB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG5oMyB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG5oNSB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG51bCB7XG4gICAgdGV4dC1hbGlnbjogbGVmdDtcbiAgICAvKiBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7ICAqL1xufVxuXG5vbCB7IC8qIE1vdmVzIERvdHMgdG8gdGhlIGxpc3QgKi9cbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7IFxufVxuXG4jUHJpbnRCdXR0b257XG4gICAgbWFyZ2luOiAyMCUgMCAyMCUgMDtcbiAgICBkaXNwbGF5OiBibG9jazsgXG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG59XG5cbiNSZXNldEJ1dHRvbiB7XG4gICAgbWFyZ2luOiAyMCUgMCAyMCUgMDtcbiAgICAvKiBtYXJnaW4tbGVmdDogMjYwJTsgKi9cbiAgICBkaXNwbGF5OiBibG9jazsgXG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG59XG5cbi5jYXJkLWhlYWRlciB7IC8qIENoYW5nZXMgUmVzdWx0cyBoZWFkZXIgKi9cbiAgICBmb250LXdlaWdodDogYm9sZDtcbiAgICBwYWRkaW5nOiAxJTtcbn1cblxuI0xldmVscyB7IC8qIEdpdmVzIFJlc3VsdHMgQm9sZCBwcm9wZXJ0eSAqLyBcbiAgICBmb250LXdlaWdodDogYm9sZDsgXG59XG5cbiNSZXN1bHRzIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGJvZHkgKi9cbiAgICBtYXJnaW46IC0xJTtcbn1cblxuI1RoZW1lNSB7IC8qIENoYW5nZXMgUmVzdWx0cyBib3ggKi9cbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDEyOCwgMTI4LCAxMjgsIDAuNTA3KTtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBtYXJnaW46IDAuNSU7XG4gICAgY29sb3I6ICNlMGUwZTA7XG59XG5cbi5zd2l0Y2gtZmllbGQgaW5wdXQgeyAvKiBDaGFuZ2VzIHJhZGlvIGJ1dHRvbnMgdG8gdG9nZ2xlIGJ1dHRvbnMgKi9cbiAgICBwb3NpdGlvbjogYWJzb2x1dGUgIWltcG9ydGFudDtcbiAgICBjbGlwOiByZWN0KDAsIDAsIDAsIDApO1xuICAgIGhlaWdodDogMXB4OyBcbiAgICB3aWR0aDogMXB4O1xuICAgIGJvcmRlcjogMDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xufVxuXG4uc3dpdGNoLWZpZWxkIGJ1dHRvbiB7IC8qIENoYW5nZXMgcmFkaW8gYnV0dG9ucyB0byB0b2dnbGUgYnV0dG9ucyAqL1xuICAgIGJhY2tncm91bmQtY29sb3I6ICM0MzRmNWM7XG4gICAgY29sb3I6IHJnYigyMzEsIDIzMSwgMjMxKTtcbiAgICBsaW5lLWhlaWdodDogMTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgcGFkZGluZzogOHB4IDE2cHg7XG4gICAgbWFyZ2luLXJpZ2h0OiAtMXB4O1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMC4zMjkpO1xuICAgIGJveC1zaGFkb3c6IGluc2V0IDAgMXB4IDNweCByZ2JhKDAsIDAsIDAsIDAuNDAwKSwgMCAxcHggcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xuICAgIHRyYW5zaXRpb246IGFsbCAwLjFzIGVhc2UtaW4tb3V0O1xufVxuXG4uc3dpdGNoLWZpZWxkIGxhYmVsIHsgLyogQ2hhbmdlcyByYWRpbyBidXR0b25zIHRvIHRvZ2dsZSBidXR0b25zICovXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzQzNGY1YztcbiAgICBjb2xvcjogI2UwZTBlMDtcbiAgICBsaW5lLWhlaWdodDogMTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgcGFkZGluZzogOHB4IDE2cHg7XG4gICAgbWFyZ2luLXJpZ2h0OiAtMXB4O1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMC4yKTtcbiAgICBib3gtc2hhZG93OiBpbnNldCAxcHggMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuNTA3KSwgMCAxcHggcmdiYSgyNTUsIDI1NSwgMjU1LCAwKTtcbiAgICB0cmFuc2l0aW9uOiBhbGwgMC4xcyBlYXNlLWluLW91dDtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbDpob3ZlciB7IC8qIENoYW5nZXMgcmFkaW8gYnV0dG9ucyB0byB0b2dnbGUgYnV0dG9ucyAqL1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLnN3aXRjaC1maWVsZCBpbnB1dDpjaGVja2VkICsgbGFiZWwgeyAvKiBDaGFuZ2VzIHJhZGlvIGJ1dHRvbnMgdG8gdG9nZ2xlIGJ1dHRvbnMgKi9cbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjBhZGZmY2U7XG4gICAgYm94LXNoYWRvdzogbm9uZTtcbiAgICBjb2xvcjogcmdiYSgwLCAwLCAwLCAwLjYpO1xufVxuXG4uc3dpdGNoLWZpZWxkIGxhYmVsOmZpcnN0LW9mLXR5cGUgeyAvKiBDaGFuZ2VzIHJhZGlvIGJ1dHRvbnMgdG8gdG9nZ2xlIGJ1dHRvbnMgKi9cbiAgICBib3JkZXItcmFkaXVzOiA0cHggMCAwIDRweDtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbDpsYXN0LW9mLXR5cGUgeyAvKiBDaGFuZ2VzIHJhZGlvIGJ1dHRvbnMgdG8gdG9nZ2xlIGJ1dHRvbnMgKi9cbiAgICBib3JkZXItcmFkaXVzOiAwIDRweCA0cHggMDtcbn1cblxuLmFsZXJ0IHsgLyogTWFrZXMgaGludHMgc21hbGxlciBhbmQgaW5saW5lIHdpdGggdGV4dCAqL1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbn1cblxuLnRvb2x0aXAxIHtcbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG4gICAgYm9yZGVyLWJvdHRvbTogMXB4IGRvdHRlZCByZ2IoMzMsIDExOCwgMTc1KTtcbn1cblxuaW1nIHtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgd2lkdGg6IDEwMCU7XG59XG4iXX0= */"]
+      styles: ["#Covid19[_ngcontent-%COMP%] { \n    text-align: center; \n}\n\n.btn-info[_ngcontent-%COMP%]:not(:disabled):not(.disabled):active, .btn-info[_ngcontent-%COMP%]:not(:disabled):not(.disabled).active, .show[_ngcontent-%COMP%]    > .btn-info.dropdown-toggle[_ngcontent-%COMP%] {\n    color: #fff;\n    background-color: #055286;\n    border-color: #014573;\n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\na[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n    text-decoration: underline;\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh5[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nul[_ngcontent-%COMP%] {\n    text-align: left;\n    \n}\n\nol[_ngcontent-%COMP%] { \n    display: inline-block; \n}\n\n#PrintButton[_ngcontent-%COMP%]{\n    margin: 20% 0 20% 0;\n    display: block; \n    justify-content: center;\n}\n\n#ResetButton[_ngcontent-%COMP%] {\n    margin: 20% 0 20% 0;\n    \n    display: block; \n    justify-content: center;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    padding: 1%;\n}\n\n#Levels[_ngcontent-%COMP%] {  \n    font-weight: bold; \n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -1%;\n}\n\n#viewMore[_ngcontent-%COMP%] {\n    position: -webkit-sticky;\n    position: sticky;\n    top: 5px;\n    z-index: 11;\n}\n\n#Theme5[_ngcontent-%COMP%] { \n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0.5%;\n    color: #e0e0e0;\n    position: -webkit-sticky;\n    position: sticky;\n    top: 55px;\n    z-index: 12;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] { \n    position: absolute !important;\n    clip: rect(0, 0, 0, 0);\n    height: 1px; \n    width: 1px;\n    border: 0;\n    overflow: hidden;\n}\n\n.switch-field[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] { \n    background-color: #434f5c;\n    color: rgb(231, 231, 231);\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.329);\n    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.400), 0 1px rgba(255, 255, 255, 0.1);\n    transition: all 0.1s ease-in-out;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%] { \n    background-color: #434f5c;\n    color: #e0e0e0;\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.507), 0 1px rgba(255, 255, 255, 0);\n    transition: all 0.1s ease-in-out;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:hover { \n    cursor: pointer;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]:checked    + label[_ngcontent-%COMP%] { \n    background-color: #20adffce;\n    box-shadow: none;\n    color: rgba(0, 0, 0, 0.6);\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:first-of-type { \n    border-radius: 4px 0 0 4px;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:last-of-type { \n    border-radius: 0 4px 4px 0;\n}\n\n.alert[_ngcontent-%COMP%] { \n    display: inline-block;\n}\n\n.tooltip1[_ngcontent-%COMP%] {\n    color: rgb(33, 118, 175);\n    border-bottom: 1px dotted rgb(33, 118, 175);\n}\n\nimg[_ngcontent-%COMP%] {\n    height: 100%;\n    width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY292aWQxOS9jb3ZpZDE5LmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBLFdBQVcsNkNBQTZDO0lBQ3BELGtCQUFrQjtBQUN0Qjs7QUFFQTtJQUNJLFdBQVc7SUFDWCx5QkFBeUI7SUFDekIscUJBQXFCO0FBQ3pCOztBQUVBLElBQUksa0JBQWtCO0lBQ2xCLFlBQVk7QUFDaEI7O0FBRUEsSUFBSSx1QkFBdUI7SUFDdkIsd0JBQXdCO0lBQ3hCLDBCQUEwQjtBQUM5Qjs7QUFFQSxLQUFLLHlCQUF5QjtJQUMxQix3QkFBd0I7QUFDNUI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQTtJQUNJLGdCQUFnQjtJQUNoQiw0QkFBNEI7QUFDaEM7O0FBRUEsS0FBSywyQkFBMkI7SUFDNUIscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0ksbUJBQW1CO0lBQ25CLGNBQWM7SUFDZCx1QkFBdUI7QUFDM0I7O0FBRUE7SUFDSSxtQkFBbUI7SUFDbkIsdUJBQXVCO0lBQ3ZCLGNBQWM7SUFDZCx1QkFBdUI7QUFDM0I7O0FBRUEsZUFBZSwyQkFBMkI7SUFDdEMsaUJBQWlCO0lBQ2pCLFdBQVc7QUFDZjs7QUFFQSxVQUFVLGdDQUFnQztJQUN0QyxpQkFBaUI7QUFDckI7O0FBRUEsV0FBVyx5QkFBeUI7SUFDaEMsV0FBVztBQUNmOztBQUVBO0lBQ0ksd0JBQWdCO0lBQWhCLGdCQUFnQjtJQUNoQixRQUFRO0lBQ1IsV0FBVztBQUNmOztBQUVBLFVBQVUsd0JBQXdCO0lBQzlCLDRDQUE0QztJQUM1QyxvQkFBb0I7SUFDcEIsWUFBWTtJQUNaLGNBQWM7SUFDZCx3QkFBZ0I7SUFBaEIsZ0JBQWdCO0lBQ2hCLFNBQVM7SUFDVCxXQUFXO0FBQ2Y7O0FBRUEsc0JBQXNCLDRDQUE0QztJQUM5RCw2QkFBNkI7SUFDN0Isc0JBQXNCO0lBQ3RCLFdBQVc7SUFDWCxVQUFVO0lBQ1YsU0FBUztJQUNULGdCQUFnQjtBQUNwQjs7QUFFQSx1QkFBdUIsNENBQTRDO0lBQy9ELHlCQUF5QjtJQUN6Qix5QkFBeUI7SUFDekIsY0FBYztJQUNkLGtCQUFrQjtJQUNsQixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLHNDQUFzQztJQUN0QyxnRkFBZ0Y7SUFDaEYsZ0NBQWdDO0FBQ3BDOztBQUVBLHNCQUFzQiw0Q0FBNEM7SUFDOUQseUJBQXlCO0lBQ3pCLGNBQWM7SUFDZCxjQUFjO0lBQ2Qsa0JBQWtCO0lBQ2xCLGlCQUFpQjtJQUNqQixrQkFBa0I7SUFDbEIsb0NBQW9DO0lBQ3BDLGdGQUFnRjtJQUNoRixnQ0FBZ0M7QUFDcEM7O0FBRUEsNEJBQTRCLDRDQUE0QztJQUNwRSxlQUFlO0FBQ25COztBQUVBLHNDQUFzQyw0Q0FBNEM7SUFDOUUsMkJBQTJCO0lBQzNCLGdCQUFnQjtJQUNoQix5QkFBeUI7QUFDN0I7O0FBRUEsb0NBQW9DLDRDQUE0QztJQUM1RSwwQkFBMEI7QUFDOUI7O0FBRUEsbUNBQW1DLDRDQUE0QztJQUMzRSwwQkFBMEI7QUFDOUI7O0FBRUEsU0FBUyw2Q0FBNkM7SUFDbEQscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0ksd0JBQXdCO0lBQ3hCLDJDQUEyQztBQUMvQzs7QUFFQTtJQUNJLFlBQVk7SUFDWixXQUFXO0FBQ2YiLCJmaWxlIjoic3JjL2FwcC9jb3ZpZDE5L2NvdmlkMTkuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIlxuI0NvdmlkMTkgeyAvKiBBbGlnbnMgY29udGVudCB0byB0aGUgY2VudGVyIG9mIHRoZSBzaXRlICovXG4gICAgdGV4dC1hbGlnbjogY2VudGVyOyBcbn1cblxuLmJ0bi1pbmZvOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpOmFjdGl2ZSwgLmJ0bi1pbmZvOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpLmFjdGl2ZSwgLnNob3cgPiAuYnRuLWluZm8uZHJvcGRvd24tdG9nZ2xlIHtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDU1Mjg2O1xuICAgIGJvcmRlci1jb2xvcjogIzAxNDU3Mztcbn1cblxucCB7IC8qIENvbXBhY3RzIHRleHQgKi9cbiAgICBtYXJnaW46IDAuMSU7XG59XG5cbmEgeyAvKiBDaGFuZ2VzIGxpbmsgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7XG59XG5cbmgxIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmgzIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmg1IHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbnVsIHtcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xuICAgIC8qIGRpc3BsYXk6IGlubGluZS1ibG9jazsgICovXG59XG5cbm9sIHsgLyogTW92ZXMgRG90cyB0byB0aGUgbGlzdCAqL1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jazsgXG59XG5cbiNQcmludEJ1dHRvbntcbiAgICBtYXJnaW46IDIwJSAwIDIwJSAwO1xuICAgIGRpc3BsYXk6IGJsb2NrOyBcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cblxuI1Jlc2V0QnV0dG9uIHtcbiAgICBtYXJnaW46IDIwJSAwIDIwJSAwO1xuICAgIC8qIG1hcmdpbi1sZWZ0OiAyNjAlOyAqL1xuICAgIGRpc3BsYXk6IGJsb2NrOyBcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cblxuLmNhcmQtaGVhZGVyIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGhlYWRlciAqL1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIHBhZGRpbmc6IDElO1xufVxuXG4jTGV2ZWxzIHsgLyogR2l2ZXMgUmVzdWx0cyBCb2xkIHByb3BlcnR5ICovIFxuICAgIGZvbnQtd2VpZ2h0OiBib2xkOyBcbn1cblxuI1Jlc3VsdHMgeyAvKiBDaGFuZ2VzIFJlc3VsdHMgYm9keSAqL1xuICAgIG1hcmdpbjogLTElO1xufVxuXG4jdmlld01vcmUge1xuICAgIHBvc2l0aW9uOiBzdGlja3k7XG4gICAgdG9wOiA1cHg7XG4gICAgei1pbmRleDogMTE7XG59XG5cbiNUaGVtZTUgeyAvKiBDaGFuZ2VzIFJlc3VsdHMgYm94ICovXG4gICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgxMjgsIDEyOCwgMTI4LCAwLjUwNyk7XG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XG4gICAgbWFyZ2luOiAwLjUlO1xuICAgIGNvbG9yOiAjZTBlMGUwO1xuICAgIHBvc2l0aW9uOiBzdGlja3k7XG4gICAgdG9wOiA1NXB4O1xuICAgIHotaW5kZXg6IDEyO1xufVxuXG4uc3dpdGNoLWZpZWxkIGlucHV0IHsgLyogQ2hhbmdlcyByYWRpbyBidXR0b25zIHRvIHRvZ2dsZSBidXR0b25zICovXG4gICAgcG9zaXRpb246IGFic29sdXRlICFpbXBvcnRhbnQ7XG4gICAgY2xpcDogcmVjdCgwLCAwLCAwLCAwKTtcbiAgICBoZWlnaHQ6IDFweDsgXG4gICAgd2lkdGg6IDFweDtcbiAgICBib3JkZXI6IDA7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbn1cblxuLnN3aXRjaC1maWVsZCBidXR0b24geyAvKiBDaGFuZ2VzIHJhZGlvIGJ1dHRvbnMgdG8gdG9nZ2xlIGJ1dHRvbnMgKi9cbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNDM0ZjVjO1xuICAgIGNvbG9yOiByZ2IoMjMxLCAyMzEsIDIzMSk7XG4gICAgbGluZS1oZWlnaHQ6IDE7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIHBhZGRpbmc6IDhweCAxNnB4O1xuICAgIG1hcmdpbi1yaWdodDogLTFweDtcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDAsIDAsIDAsIDAuMzI5KTtcbiAgICBib3gtc2hhZG93OiBpbnNldCAwIDFweCAzcHggcmdiYSgwLCAwLCAwLCAwLjQwMCksIDAgMXB4IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcbiAgICB0cmFuc2l0aW9uOiBhbGwgMC4xcyBlYXNlLWluLW91dDtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbCB7IC8qIENoYW5nZXMgcmFkaW8gYnV0dG9ucyB0byB0b2dnbGUgYnV0dG9ucyAqL1xuICAgIGJhY2tncm91bmQtY29sb3I6ICM0MzRmNWM7XG4gICAgY29sb3I6ICNlMGUwZTA7XG4gICAgbGluZS1oZWlnaHQ6IDE7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIHBhZGRpbmc6IDhweCAxNnB4O1xuICAgIG1hcmdpbi1yaWdodDogLTFweDtcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDAsIDAsIDAsIDAuMik7XG4gICAgYm94LXNoYWRvdzogaW5zZXQgMXB4IDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjUwNyksIDAgMXB4IHJnYmEoMjU1LCAyNTUsIDI1NSwgMCk7XG4gICAgdHJhbnNpdGlvbjogYWxsIDAuMXMgZWFzZS1pbi1vdXQ7XG59XG5cbi5zd2l0Y2gtZmllbGQgbGFiZWw6aG92ZXIgeyAvKiBDaGFuZ2VzIHJhZGlvIGJ1dHRvbnMgdG8gdG9nZ2xlIGJ1dHRvbnMgKi9cbiAgICBjdXJzb3I6IHBvaW50ZXI7XG59XG5cbi5zd2l0Y2gtZmllbGQgaW5wdXQ6Y2hlY2tlZCArIGxhYmVsIHsgLyogQ2hhbmdlcyByYWRpbyBidXR0b25zIHRvIHRvZ2dsZSBidXR0b25zICovXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzIwYWRmZmNlO1xuICAgIGJveC1zaGFkb3c6IG5vbmU7XG4gICAgY29sb3I6IHJnYmEoMCwgMCwgMCwgMC42KTtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbDpmaXJzdC1vZi10eXBlIHsgLyogQ2hhbmdlcyByYWRpbyBidXR0b25zIHRvIHRvZ2dsZSBidXR0b25zICovXG4gICAgYm9yZGVyLXJhZGl1czogNHB4IDAgMCA0cHg7XG59XG5cbi5zd2l0Y2gtZmllbGQgbGFiZWw6bGFzdC1vZi10eXBlIHsgLyogQ2hhbmdlcyByYWRpbyBidXR0b25zIHRvIHRvZ2dsZSBidXR0b25zICovXG4gICAgYm9yZGVyLXJhZGl1czogMCA0cHggNHB4IDA7XG59XG5cbi5hbGVydCB7IC8qIE1ha2VzIGhpbnRzIHNtYWxsZXIgYW5kIGlubGluZSB3aXRoIHRleHQgKi9cbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG5cbi50b29sdGlwMSB7XG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xuICAgIGJvcmRlci1ib3R0b206IDFweCBkb3R0ZWQgcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmltZyB7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIHdpZHRoOiAxMDAlO1xufVxuIl19 */"]
     });
     /*@__PURE__*/
 
@@ -2665,8 +2754,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(CstatComponent, [{
         key: "Cstat",
         value: function Cstat() {
-          this.ResultCstat = this.tidal / (this.Pplat - this.peep);
-          document.getElementById("ResultCstat").innerHTML = this.ResultCstat.toFixed(2) + " mL/cm H₂O";
+          var a = document.getElementById("tidal").value;
+          var b = document.getElementById("Pplat").value;
+          var c = document.getElementById("peep").value;
+
+          if (this.tidal != null && this.Pplat != null && this.peep != null) {
+            this.ResultCstat = this.tidal / (this.Pplat - this.peep);
+            document.getElementById("ResultCstat").innerHTML = this.ResultCstat.toFixed(2) + " mL/cm H₂O";
+          }
         }
       }, {
         key: "ngOnInit",
@@ -2684,7 +2779,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           document.getElementById("tidal").value = "";
           document.getElementById("Pplat").value = "";
           document.getElementById("peep").value = "";
-          document.getElementById("ResultCstat").innerHTML = "";
+          document.getElementById("ResultCstat").innerHTML = "Please fill out required fields.";
         }
       }]);
 
@@ -2698,9 +2793,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     CstatComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: CstatComponent,
       selectors: [["app-cstat"]],
-      decls: 82,
+      decls: 80,
       vars: 3,
-      consts: [["id", "Cstat"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], [1, "form-group", 2, "display", "inline-flex"], ["for", "amount1", 1, "control-label"], [1, "form-group"], [1, "input-group", "mb-3"], ["type", "text", "id", "tidal", "placeholder", "e.g. 700", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange"], [1, "input-group-append"], [1, "input-group-text"], ["for", "amount2", 1, "control-label"], ["type", "text", "id", "Pplat", "placeholder", "e.g. 35", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange"], ["for", "amount3", 1, "control-label"], ["type", "text", "id", "peep", "placeholder", "e.g. 8", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange"], ["type", "button", 1, "btn", "btn-primary", 3, "click"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-primary", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-primary", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "Levels1", 2, "font-weight", "bold", "font-size", "larger"], ["id", "ResultCstat"], ["id", "Management_2_1"], ["id", "Medications_2_1"], ["type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-outline-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], ["src", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hamilton-medical.com%2Fen_US%2Fdam%2Fjcr%3A391aeeb9-d347-4795-8fd9-95259755acd6%2F97_Compliance_equation%2520static.png&f=1&nofb=1", "alt", "BRSS", 1, "center"]],
+      consts: [["id", "Cstat"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], [1, "form-group", 2, "display", "inline-flex"], ["for", "amount1", 1, "control-label"], [1, "form-group"], [1, "input-group", "mb-3"], ["type", "text", "id", "tidal", "placeholder", "e.g. 700", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange", "input"], [1, "input-group-append"], [1, "input-group-text"], ["for", "amount2", 1, "control-label"], ["type", "text", "id", "Pplat", "placeholder", "e.g. 35", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange", "input"], ["for", "amount3", 1, "control-label"], ["type", "text", "id", "peep", "placeholder", "e.g. 8", 1, "form-control", 2, "display", "inline-block", 3, "ngModel", "ngModelChange", "input"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-info", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-info", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "Levels1", 2, "font-weight", "bold", "font-size", "larger"], ["id", "ResultCstat"], ["id", "Management_2_1"], ["id", "Medications_2_1"], ["type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], ["src", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hamilton-medical.com%2Fen_US%2Fdam%2Fjcr%3A391aeeb9-d347-4795-8fd9-95259755acd6%2F97_Compliance_equation%2520static.png&f=1&nofb=1", "alt", "BRSS", 1, "center"]],
       template: function CstatComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -2745,6 +2840,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function CstatComponent_Template_input_ngModelChange_16_listener($event) {
             return ctx.tidal = $event;
+          })("input", function CstatComponent_Template_input_input_16_listener() {
+            return ctx.Cstat();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2789,6 +2886,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function CstatComponent_Template_input_ngModelChange_28_listener($event) {
             return ctx.Pplat = $event;
+          })("input", function CstatComponent_Template_input_input_28_listener() {
+            return ctx.Cstat();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2825,6 +2924,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("ngModelChange", function CstatComponent_Template_input_ngModelChange_37_listener($event) {
             return ctx.peep = $event;
+          })("input", function CstatComponent_Template_input_input_37_listener() {
+            return ctx.Cstat();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
@@ -2847,97 +2948,89 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](41, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "button", 16);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "div", 16);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CstatComponent_Template_button_click_42_listener() {
-            return ctx.Cstat();
-          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](43, "button", 17);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, "Calculate");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](44, "hr");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "div", 17);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](46, "button", 18);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CstatComponent_Template_button_click_46_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CstatComponent_Template_button_click_43_listener() {
             return ctx.Reset();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](47, "Reset");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](44, "Reset");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "button", 19);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "button", 18);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CstatComponent_Template_button_click_48_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function CstatComponent_Template_button_click_45_listener() {
             return ctx.Print();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](49, "Print");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46, "Print");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](50, "div", 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](47, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "div", 20);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "div", 19);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](52, "div", 21);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "div", 20);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, "Results:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "div", 22);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "p", 23);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](56, "span", 24);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](50, "Results:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "p", 25);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "div", 21);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](58, "Static Lung Compliance (Cstat)");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](52, "p", 22);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](53, "span", 23);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](59, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "p", 26);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, "Interpretation: Normal static lung compliance is 50-100 mL/cm H\u2082O");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](54, "Please fill out required fields.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "p", 24);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](56, "Static Lung Compliance (Cstat)");
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](62, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](57, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](63, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](58, "p", 25);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](64, "button", 27);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](59, "Interpretation: Normal static lung compliance is 50-100 mL/cm H\u2082O");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](60, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](61, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](62, "button", 26);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "svg", 28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "svg", 27);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](66, "path", 29);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](64, "path", 28);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](67, " View More ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](65, " View More ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "svg", 28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](66, "svg", 27);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](69, "path", 29);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](67, "path", 28);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2945,31 +3038,31 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](70, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](68, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](71, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](69, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](72, "div", 30);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](70, "div", 29);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](73, "h3");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](71, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](74, "Formula");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](75, "div", 31);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](76, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](77, "Static lung compliance (Cstat), mL/cm H2O = Corrected/delivered tidal volume (\u0394V), mL / (Plateau pressure (Pplat), cm H2O \u2013 PEEP, cm H2O)");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](72, "Formula");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](78, "img", 32);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](73, "div", 30);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](79, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](74, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](80, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](75, "Static lung compliance (Cstat), mL/cm H2O = Corrected/delivered tidal volume (\u0394V), mL / (Plateau pressure (Pplat), cm H2O \u2013 PEEP, cm H2O)");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](76, "img", 31);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](77, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](78, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -2977,7 +3070,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](81, "div", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](79, "div", 3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -3076,6 +3169,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           document.getElementById("criteria_1_5-no").checked = true;
           /*(<HTMLInputElement>document.getElementById("pneumonia-yes")).checked = true;  Not sure if i want this ? */
 
+          Curb65Component.arr1 = Array(5);
+          console.log(Curb65Component.arr1);
           this.Points = 0;
           /* Resets score to default*/
 
@@ -3084,6 +3179,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "CheckPneumonia",
         value: function CheckPneumonia() {
+          this.Points = 0;
+
+          for (var i in Curb65Component.arr1) {
+            this.Points += Curb65Component.arr1[i];
+          }
+
+          console.log(Curb65Component.arr1);
+
           if (document.getElementById("pneumonia-no").checked === true) {
             document.getElementById("Pneumonia").style.display = 'none';
             document.getElementById("AnyInfection").style.display = 'block';
@@ -3098,14 +3201,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
       }, {
         key: "Add",
-        value: function Add() {
-          this.Points++;
+        value: function Add(value) {
+          Curb65Component.arr1[value] = 1;
           this.CheckPneumonia();
         }
       }, {
         key: "Sub",
-        value: function Sub() {
-          this.Points--;
+        value: function Sub(value) {
+          Curb65Component.arr1[value] = 0;
           this.CheckPneumonia();
         }
       }, {
@@ -3232,6 +3335,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       return Curb65Component;
     }();
 
+    Curb65Component.arr1 = new Array(5);
+
     Curb65Component.ɵfac = function Curb65Component_Factory(t) {
       return new (t || Curb65Component)();
     };
@@ -3239,9 +3344,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     Curb65Component.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: Curb65Component,
       selectors: [["app-curb65"]],
-      decls: 147,
+      decls: 165,
       vars: 1,
-      consts: [["id", "CURB65"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], [1, "switch-field"], ["type", "radio", "id", "pneumonia-yes", "name", "pneumonia", "checked", "", 3, "change"], ["for", "pneumonia-yes", 1, "switch-field"], ["type", "radio", "id", "pneumonia-no", "name", "pneumonia", 3, "change"], ["for", "pneumonia-no", 1, "switch-field"], ["type", "radio", "id", "criteria_1_1-no", "name", "criteria_1_1", "checked", "", 3, "change"], ["for", "criteria_1_1-no", 1, "switch-field"], ["type", "radio", "id", "criteria_1_1-yes", "name", "criteria_1_1", 3, "change"], ["for", "criteria_1_1-yes", 1, "switch-field"], ["type", "radio", "id", "criteria_1_2-no", "name", "criteria_1_2", "checked", "", 3, "change"], ["for", "criteria_1_2-no", 1, "switch-field"], ["type", "radio", "id", "criteria_1_2-yes", "name", "criteria_1_2", 3, "change"], ["for", "criteria_1_2-yes", 1, "switch-field"], ["type", "radio", "id", "criteria_1_3-no", "name", "criteria_1_3", "checked", "", 3, "change"], ["for", "criteria_1_3-no", 1, "switch-field"], ["type", "radio", "id", "criteria_1_3-yes", "name", "criteria_1_3", 3, "change"], ["for", "criteria_1_3-yes", 1, "switch-field"], ["type", "radio", "id", "criteria_1_4-no", "name", "criteria_1_4", "checked", "", 3, "change"], ["for", "criteria_1_4-no", 1, "switch-field"], ["type", "radio", "id", "criteria_1_4-yes", "name", "criteria_1_4", 3, "change"], ["for", "criteria_1_4-yes", 1, "switch-field"], ["type", "radio", "id", "criteria_1_5-no", "name", "criteria_1_5", "checked", "", 3, "change"], ["for", "criteria_1_5-no", 1, "switch-field"], ["type", "radio", "id", "criteria_1_5-yes", "name", "criteria_1_5", 3, "change"], ["for", "criteria_1_5-yes", 1, "switch-field"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-primary", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-primary", 3, "click"], ["id", "ResultsBox"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], [1, "card-body"], ["id", "Results"], ["id", "BoldResult"], ["id", "Point"], ["id", "Mortality_1_1"], ["id", "Treatment_1_1"], ["type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-outline-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse"], ["id", "Pneumonia"], ["href", "https://en.wikipedia.org/wiki/CURB-65", "target", "_blank"], [2, "list-style-type", "none", "text-align", "left"], ["id", "AnyInfection"], [2, "list-style-type", "none"]],
+      consts: [["id", "CURB65"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], ["data-toggle", "buttons", 1, "btn-group", "btn-group-toggle"], [1, "btn", "btn-info", "active"], ["type", "radio", "name", "pneumonia", "id", "pneumonia-yes", "autocomplete", "off", "checked", "", 3, "click"], [1, "btn", "btn-info"], ["type", "radio", "name", "pneumonia", "id", "pneumonia-no", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_1_1", "id", "criteria_1_1-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_1_1", "id", "criteria_1_1-yes", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_1_2", "id", "criteria_1_2-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_1_2", "id", "criteria_1_2-yes", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_1_3", "id", "criteria_1_3-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_1_3", "id", "criteria_1_3-yes", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_1_4", "id", "criteria_1_4-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_1_4", "id", "criteria_1_4-yes", "autocomplete", "off", 3, "click"], ["type", "radio", "name", "criteria_1_5", "id", "criteria_1_5-no", "autocomplete", "off", "checked", "", 3, "click"], ["type", "radio", "name", "criteria_1_5", "id", "criteria_1_5-yes", "autocomplete", "off", 3, "click"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-info", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-info", 3, "click"], ["id", "ResultsBox"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], [1, "card-body"], ["id", "Results"], ["id", "BoldResult"], ["id", "Point"], ["id", "Mortality_1_1"], ["id", "Treatment_1_1"], ["type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse"], ["id", "Pneumonia"], ["href", "https://en.wikipedia.org/wiki/CURB-65", "target", "_blank"], [2, "list-style-type", "none", "text-align", "left"], ["id", "AnyInfection"], [2, "list-style-type", "none"]],
       template: function Curb65Component_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -3268,307 +3373,343 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "div", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](10, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "input", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_11_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "label", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "input", 7);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_13_listener() {
             return ctx.CheckPneumonia();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "label", 7);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13, "Pneumonia");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](14, "Pneumonia ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](14, "input", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "label", 8);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_14_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "input", 9);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_16_listener() {
             return ctx.CheckPneumonia();
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](15, "label", 9);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](16, "Any infection");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](17, "Any infection ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](18, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](18, "Confusion:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](19, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](21, "Confusion:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "div", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](22, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "input", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_20_listener() {
-            return ctx.Sub();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "label", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "input", 10);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_25_listener() {
+            return ctx.Sub(0);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](21, "label", 11);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](22, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](26, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "input", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](27, "label", 8);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_23_listener() {
-            return ctx.Add();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "input", 11);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_28_listener() {
+            return ctx.Add(0);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "label", 13);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](25, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](29, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](30, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](27, "BUN > 19 mg/dL (> 7 mmol/L):");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](31, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](33, "BUN > 19 mg/dL (> 7 mmol/L):");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](28, "div", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](34, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "input", 14);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_29_listener() {
-            return ctx.Sub();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](36, "label", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "input", 12);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_37_listener() {
+            return ctx.Sub(1);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "label", 15);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](38, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](32, "input", 16);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "label", 8);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_32_listener() {
-            return ctx.Add();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "input", 13);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_40_listener() {
+            return ctx.Add(1);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](33, "label", 17);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](34, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](41, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](42, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](36, "Respiratory Rate \u2265 30:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](37, "div", 5);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](38, "input", 18);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_38_listener() {
-            return ctx.Sub();
-          });
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "label", 19);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](40, "No");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](41, "input", 20);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_41_listener() {
-            return ctx.Add();
-          });
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](42, "label", 21);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](43, "Yes");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](43, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "label");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, "Systolic BP < 90 mmHg or Diastolic BP \u2264 60 mmHg:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](45, "Respiratory Rate \u2265 30:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](46, "div", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](46, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](47, "input", 22);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](47, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_47_listener() {
-            return ctx.Sub();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "label", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "input", 14);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_49_listener() {
+            return ctx.Sub(2);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](48, "label", 23);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](49, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](50, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "input", 24);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "label", 8);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_50_listener() {
-            return ctx.Add();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](52, "input", 15);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_52_listener() {
+            return ctx.Add(2);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](51, "label", 25);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](52, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](53, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](53, "label");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](54, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](54, "Age \u2265 65:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](55, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](57, "Systolic BP < 90 mmHg or Diastolic BP \u2264 60 mmHg:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "div", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](58, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](56, "input", 26);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "div", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_56_listener() {
-            return ctx.Sub();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "label", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](61, "input", 16);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_61_listener() {
+            return ctx.Sub(3);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](57, "label", 27);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](58, "No");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](62, "No ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "input", 28);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "label", 8);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("change", function Curb65Component_Template_input_change_59_listener() {
-            return ctx.Add();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](64, "input", 17);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_64_listener() {
+            return ctx.Add(3);
           });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "label", 29);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, "Yes");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](65, "Yes ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](62, "div", 30);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](66, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](63, "button", 31);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](67, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_button_click_63_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "label");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](69, "Age \u2265 65:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](70, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](71, "div", 5);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](72, "label", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](73, "input", 18);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_73_listener() {
+            return ctx.Sub(4);
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](74, "No ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](75, "label", 8);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](76, "input", 19);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_input_click_76_listener() {
+            return ctx.Add(4);
+          });
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](77, "Yes ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](78, "hr");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](79, "div", 2);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](80, "div", 20);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](81, "button", 21);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_button_click_81_listener() {
             return ctx.Reset();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](64, "Reset");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](82, "Reset");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](65, "button", 32);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](83, "button", 22);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_button_click_65_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function Curb65Component_Template_button_click_83_listener() {
             return ctx.Print();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](66, "Print");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](84, "Print");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](67, "div", 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](85, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](68, "div", 33);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "div", 23);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](69, "div", 34);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](87, "div", 24);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](70, "div", 35);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](88, "div", 25);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](71, " Results: ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](72, "div", 36);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](73, "div", 37);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](74, "p", 38);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](75);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](76, "span", 39);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](89, " Results: ");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](77, "p", 40);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](90, "div", 26);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](78, "p", 41);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](91, "div", 27);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](92, "p", 28);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](93);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](94, "span", 29);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](95, "p", 30);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](96, "p", 31);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](79, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](80, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](81, "button", 42);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](97, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](98, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "button", 32);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](82, "svg", 43);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](100, "svg", 33);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](83, "path", 44);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](101, "path", 34);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](84, " View More ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](102, " View More ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](85, "svg", 43);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "svg", 33);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](86, "path", 44);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](104, "path", 34);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -3576,97 +3717,97 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](87, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](105, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](88, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](106, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "div", 45);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](107, "div", 35);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](90, "div", 46);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](108, "div", 36);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](91, "h3");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](109, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](92, "Pneumonia");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](93, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](94, "The risk of death at 30 days increases as the score increases:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](110, "Pneumonia");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](95, "Ul");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](111, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](96, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](97, "0\u20140.6%");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](112, "The risk of death at 30 days increases as the score increases:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](98, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](99, "1\u20142.7%");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](100, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](101, "2\u20146.8%");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](102, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](103, "3\u201414.0%");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](104, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](105, "4\u201427.8%");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](106, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](107, "5\u201427.8%");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](108, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](109, "The ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](110, "a", 47);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](111, "CURB-65");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](112, " is used as a means of deciding the action that is needed to be taken for that patient.");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](113, "Ul", 48);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](113, "Ul");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](114, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](115, "0-1: Treat as an outpatient");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](115, "0\u20140.6%");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](116, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](117, "2: Consider a short stay in hospital or watch very closely as an outpatient");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](117, "1\u20142.7%");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](118, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, "3-5: Requires hospitalization with consideration as to whether they need to be in the intensive care unit");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](119, "2\u20146.8%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](120, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](121, "3\u201414.0%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](122, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](123, "4\u201427.8%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](124, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](125, "5\u201427.8%");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](126, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](127, "The ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](128, "a", 37);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](129, "CURB-65");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](130, " is used as a means of deciding the action that is needed to be taken for that patient.");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](131, "Ul", 38);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](132, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](133, "0-1: Treat as an outpatient");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](135, "2: Consider a short stay in hospital or watch very closely as an outpatient");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](136, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](137, "3-5: Requires hospitalization with consideration as to whether they need to be in the intensive care unit");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -3674,89 +3815,89 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](120, "div", 49);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](138, "div", 39);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](121, "h3");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](139, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](122, "Any infection");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](123, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](124, "Patients with any type of infection (half of the patients had pneumonia), the risk of death increases as the score increases:");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](140, "Any infection");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](125, "Ul");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](141, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](126, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](127, "0 to 1 < 5% mortality");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](142, "Patients with any type of infection (half of the patients had pneumonia), the risk of death increases as the score increases:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](128, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](143, "Ul");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](129, "2 to 3 < 10% mortality");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](144, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](130, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](131, "4 to 5 15-30% mortality");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](145, "0 to 1 < 5% mortality");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](146, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](132, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](133, "The ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "a", 47);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](135, "CURB-65");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](147, "2 to 3 < 10% mortality");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](136, " is used as a means of deciding the action that is needed to be taken for that patient.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](148, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](137, "Ul", 50);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](138, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](139, "0-1: Treat as an outpatient");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](140, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](141, "2-3: Consider a short stay in hospital or watch very closely as an outpatient");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](142, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](143, "4-5: Requires hospitalization with consideration as to whether they need to be in the intensive care unit");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](149, "4 to 5 15-30% mortality");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](150, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](151, "The ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](152, "a", 37);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](153, "CURB-65");
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](144, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](154, " is used as a means of deciding the action that is needed to be taken for that patient.");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](145, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](155, "Ul", 40);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](156, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](157, "0-1: Treat as an outpatient");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](158, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](159, "2-3: Consider a short stay in hospital or watch very closely as an outpatient");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](160, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](161, "4-5: Requires hospitalization with consideration as to whether they need to be in the intensive care unit");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](146, "div", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](162, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](163, "br");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](164, "div", 3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -3766,12 +3907,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         if (rf & 2) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](75);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](93);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" ", ctx.Points, " ");
         }
       },
-      styles: ["#CURB65[_ngcontent-%COMP%] {  \n    text-align: center;\n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\na[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nul[_ngcontent-%COMP%] { \n    display: inline;\n}\n\n#PrintButton[_ngcontent-%COMP%]{\n    margin: 20% 0 20% 0;\n    display: block; \n    justify-content: center;\n}\n\n#ResetButton[_ngcontent-%COMP%] {\n    margin: 20% 0 20% 0;\n    \n    display: block; \n    justify-content: center;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    padding: 1%;\n}\n\n#BoldResult[_ngcontent-%COMP%] {  \n    font-weight: bold;\n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -1%;\n}\n\n#ResultsBox[_ngcontent-%COMP%] { \n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0.5%;\n    color: #e0e0e0;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\n    position: absolute !important;\n    clip: rect(0, 0, 0, 0);\n    height: 1px;\n    width: 1px;\n    border: 0;\n    overflow: hidden;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%] {\n    background-color: #434f5c;\n    color: #e0e0e0;\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.507), 0 1px rgba(255, 255, 255, 0);\n    transition: all 0.1s ease-in-out;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:hover {\n    cursor: pointer;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]:checked    + label[_ngcontent-%COMP%] {\n    background-color: #20adffce;\n    box-shadow: none;\n    color: rgba(0, 0, 0, 0.6);\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:first-of-type {\n    border-radius: 4px 0 0 4px;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:last-of-type {\n    border-radius: 0 4px 4px 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY3VyYjY1L2N1cmI2NS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQSxXQUFXLDZDQUE2QztJQUNwRCxrQkFBa0I7QUFDdEI7O0FBRUEsSUFBSSxrQkFBa0I7SUFDbEIsWUFBWTtBQUNoQjs7QUFFQSxJQUFJLHVCQUF1QjtJQUN2Qix3QkFBd0I7QUFDNUI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQSxLQUFLLDJCQUEyQjtJQUM1QixlQUFlO0FBQ25COztBQUVBO0lBQ0ksbUJBQW1CO0lBQ25CLGNBQWM7SUFDZCx1QkFBdUI7QUFDM0I7O0FBRUE7SUFDSSxtQkFBbUI7SUFDbkIsdUJBQXVCO0lBQ3ZCLGNBQWM7SUFDZCx1QkFBdUI7QUFDM0I7O0FBRUEsZUFBZSwyQkFBMkI7SUFDdEMsaUJBQWlCO0lBQ2pCLFdBQVc7QUFDZjs7QUFFQSxjQUFjLGdDQUFnQztJQUMxQyxpQkFBaUI7QUFDckI7O0FBRUEsV0FBVyx5QkFBeUI7SUFDaEMsV0FBVztBQUNmOztBQUVBLGNBQWMsd0JBQXdCO0lBQ2xDLDRDQUE0QztJQUM1QyxvQkFBb0I7SUFDcEIsWUFBWTtJQUNaLGNBQWM7QUFDbEI7O0FBRUE7SUFDSSw2QkFBNkI7SUFDN0Isc0JBQXNCO0lBQ3RCLFdBQVc7SUFDWCxVQUFVO0lBQ1YsU0FBUztJQUNULGdCQUFnQjtBQUNwQjs7QUFFQTtJQUNJLHlCQUF5QjtJQUN6QixjQUFjO0lBQ2QsY0FBYztJQUNkLGtCQUFrQjtJQUNsQixpQkFBaUI7SUFDakIsa0JBQWtCO0lBQ2xCLG9DQUFvQztJQUNwQyxnRkFBZ0Y7SUFDaEYsZ0NBQWdDO0FBQ3BDOztBQUVBO0lBQ0ksZUFBZTtBQUNuQjs7QUFFQTtJQUNJLDJCQUEyQjtJQUMzQixnQkFBZ0I7SUFDaEIseUJBQXlCO0FBQzdCOztBQUVBO0lBQ0ksMEJBQTBCO0FBQzlCOztBQUVBO0lBQ0ksMEJBQTBCO0FBQzlCIiwiZmlsZSI6InNyYy9hcHAvY3VyYjY1L2N1cmI2NS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4jQ1VSQjY1IHsgIC8qIEFsaWducyBjb250ZW50IHRvIHRoZSBjZW50ZXIgb2YgdGhlIHNpdGUgKi9cbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbnAgeyAvKiBDb21wYWN0cyB0ZXh0ICovXG4gICAgbWFyZ2luOiAwLjElO1xufVxuXG5hIHsgLyogQ2hhbmdlcyBsaW5rIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG5oMSB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG5oMyB7IC8qIENoYW5nZXMgaGVhZGVyIGNvbG9yICovXG4gICAgY29sb3I6IHJnYigzMywgMTE4LCAxNzUpO1xufVxuXG51bCB7IC8qIE1vdmVzIERvdHMgdG8gdGhlIGxpc3QgKi9cbiAgICBkaXNwbGF5OiBpbmxpbmU7XG59XG5cbiNQcmludEJ1dHRvbntcbiAgICBtYXJnaW46IDIwJSAwIDIwJSAwO1xuICAgIGRpc3BsYXk6IGJsb2NrOyBcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cblxuI1Jlc2V0QnV0dG9uIHtcbiAgICBtYXJnaW46IDIwJSAwIDIwJSAwO1xuICAgIC8qIG1hcmdpbi1sZWZ0OiAyNjAlOyAqL1xuICAgIGRpc3BsYXk6IGJsb2NrOyBcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cblxuLmNhcmQtaGVhZGVyIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGhlYWRlciAqL1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIHBhZGRpbmc6IDElO1xufVxuXG4jQm9sZFJlc3VsdCB7IC8qIEdpdmVzIFJlc3VsdHMgQm9sZCBwcm9wZXJ0eSAqLyBcbiAgICBmb250LXdlaWdodDogYm9sZDtcbn1cblxuI1Jlc3VsdHMgeyAvKiBDaGFuZ2VzIFJlc3VsdHMgYm9keSAqL1xuICAgIG1hcmdpbjogLTElO1xufVxuXG4jUmVzdWx0c0JveCB7IC8qIENoYW5nZXMgUmVzdWx0cyBib3ggKi9cbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDEyOCwgMTI4LCAxMjgsIDAuNTA3KTtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBtYXJnaW46IDAuNSU7XG4gICAgY29sb3I6ICNlMGUwZTA7XG59XG5cbi5zd2l0Y2gtZmllbGQgaW5wdXQge1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZSAhaW1wb3J0YW50O1xuICAgIGNsaXA6IHJlY3QoMCwgMCwgMCwgMCk7XG4gICAgaGVpZ2h0OiAxcHg7XG4gICAgd2lkdGg6IDFweDtcbiAgICBib3JkZXI6IDA7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzQzNGY1YztcbiAgICBjb2xvcjogI2UwZTBlMDtcbiAgICBsaW5lLWhlaWdodDogMTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgcGFkZGluZzogOHB4IDE2cHg7XG4gICAgbWFyZ2luLXJpZ2h0OiAtMXB4O1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMCwgMCwgMCwgMC4yKTtcbiAgICBib3gtc2hhZG93OiBpbnNldCAxcHggMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuNTA3KSwgMCAxcHggcmdiYSgyNTUsIDI1NSwgMjU1LCAwKTtcbiAgICB0cmFuc2l0aW9uOiBhbGwgMC4xcyBlYXNlLWluLW91dDtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbDpob3ZlciB7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xufVxuXG4uc3dpdGNoLWZpZWxkIGlucHV0OmNoZWNrZWQgKyBsYWJlbCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzIwYWRmZmNlO1xuICAgIGJveC1zaGFkb3c6IG5vbmU7XG4gICAgY29sb3I6IHJnYmEoMCwgMCwgMCwgMC42KTtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbDpmaXJzdC1vZi10eXBlIHtcbiAgICBib3JkZXItcmFkaXVzOiA0cHggMCAwIDRweDtcbn1cblxuLnN3aXRjaC1maWVsZCBsYWJlbDpsYXN0LW9mLXR5cGUge1xuICAgIGJvcmRlci1yYWRpdXM6IDAgNHB4IDRweCAwO1xufVxuIl19 */"]
+      styles: ["#CURB65[_ngcontent-%COMP%] {  \n    text-align: center;\n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\na[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nul[_ngcontent-%COMP%] { \n    display: inline;\n}\n\n.btn-info[_ngcontent-%COMP%]:not(:disabled):not(.disabled):active, .btn-info[_ngcontent-%COMP%]:not(:disabled):not(.disabled).active, .show[_ngcontent-%COMP%]    > .btn-info.dropdown-toggle[_ngcontent-%COMP%] {\n    color: #fff;\n    background-color: #055286;\n    border-color: #014573;\n}\n\n#PrintButton[_ngcontent-%COMP%]{\n    margin: 20% 0 20% 0;\n    display: block; \n    justify-content: center;\n}\n\n#ResetButton[_ngcontent-%COMP%] {\n    margin: 20% 0 20% 0;\n    \n    display: block; \n    justify-content: center;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    padding: 1%;\n}\n\n#BoldResult[_ngcontent-%COMP%] {  \n    font-weight: bold;\n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -1%;\n}\n\n#ResultsBox[_ngcontent-%COMP%] { \n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0.5%;\n    color: #e0e0e0;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\n    position: absolute !important;\n    clip: rect(0, 0, 0, 0);\n    height: 1px;\n    width: 1px;\n    border: 0;\n    overflow: hidden;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%] {\n    background-color: #434f5c;\n    color: #e0e0e0;\n    line-height: 1;\n    text-align: center;\n    padding: 8px 16px;\n    margin-right: -1px;\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.507), 0 1px rgba(255, 255, 255, 0);\n    transition: all 0.1s ease-in-out;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:hover {\n    cursor: pointer;\n}\n\n.switch-field[_ngcontent-%COMP%]   input[_ngcontent-%COMP%]:checked    + label[_ngcontent-%COMP%] {\n    background-color: #20adffce;\n    box-shadow: none;\n    color: rgba(0, 0, 0, 0.6);\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:first-of-type {\n    border-radius: 4px 0 0 4px;\n}\n\n.switch-field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%]:last-of-type {\n    border-radius: 0 4px 4px 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY3VyYjY1L2N1cmI2NS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQSxXQUFXLDZDQUE2QztJQUNwRCxrQkFBa0I7QUFDdEI7O0FBRUEsSUFBSSxrQkFBa0I7SUFDbEIsWUFBWTtBQUNoQjs7QUFFQSxJQUFJLHVCQUF1QjtJQUN2Qix3QkFBd0I7QUFDNUI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQSxLQUFLLDJCQUEyQjtJQUM1QixlQUFlO0FBQ25COztBQUVBO0lBQ0ksV0FBVztJQUNYLHlCQUF5QjtJQUN6QixxQkFBcUI7QUFDekI7O0FBRUE7SUFDSSxtQkFBbUI7SUFDbkIsY0FBYztJQUNkLHVCQUF1QjtBQUMzQjs7QUFFQTtJQUNJLG1CQUFtQjtJQUNuQix1QkFBdUI7SUFDdkIsY0FBYztJQUNkLHVCQUF1QjtBQUMzQjs7QUFFQSxlQUFlLDJCQUEyQjtJQUN0QyxpQkFBaUI7SUFDakIsV0FBVztBQUNmOztBQUVBLGNBQWMsZ0NBQWdDO0lBQzFDLGlCQUFpQjtBQUNyQjs7QUFFQSxXQUFXLHlCQUF5QjtJQUNoQyxXQUFXO0FBQ2Y7O0FBRUEsY0FBYyx3QkFBd0I7SUFDbEMsNENBQTRDO0lBQzVDLG9CQUFvQjtJQUNwQixZQUFZO0lBQ1osY0FBYztBQUNsQjs7QUFFQTtJQUNJLDZCQUE2QjtJQUM3QixzQkFBc0I7SUFDdEIsV0FBVztJQUNYLFVBQVU7SUFDVixTQUFTO0lBQ1QsZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0kseUJBQXlCO0lBQ3pCLGNBQWM7SUFDZCxjQUFjO0lBQ2Qsa0JBQWtCO0lBQ2xCLGlCQUFpQjtJQUNqQixrQkFBa0I7SUFDbEIsb0NBQW9DO0lBQ3BDLGdGQUFnRjtJQUNoRixnQ0FBZ0M7QUFDcEM7O0FBRUE7SUFDSSxlQUFlO0FBQ25COztBQUVBO0lBQ0ksMkJBQTJCO0lBQzNCLGdCQUFnQjtJQUNoQix5QkFBeUI7QUFDN0I7O0FBRUE7SUFDSSwwQkFBMEI7QUFDOUI7O0FBRUE7SUFDSSwwQkFBMEI7QUFDOUIiLCJmaWxlIjoic3JjL2FwcC9jdXJiNjUvY3VyYjY1LmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbiNDVVJCNjUgeyAgLyogQWxpZ25zIGNvbnRlbnQgdG8gdGhlIGNlbnRlciBvZiB0aGUgc2l0ZSAqL1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxucCB7IC8qIENvbXBhY3RzIHRleHQgKi9cbiAgICBtYXJnaW46IDAuMSU7XG59XG5cbmEgeyAvKiBDaGFuZ2VzIGxpbmsgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmgxIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmgzIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbnVsIHsgLyogTW92ZXMgRG90cyB0byB0aGUgbGlzdCAqL1xuICAgIGRpc3BsYXk6IGlubGluZTtcbn1cblxuLmJ0bi1pbmZvOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpOmFjdGl2ZSwgLmJ0bi1pbmZvOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpLmFjdGl2ZSwgLnNob3cgPiAuYnRuLWluZm8uZHJvcGRvd24tdG9nZ2xlIHtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDU1Mjg2O1xuICAgIGJvcmRlci1jb2xvcjogIzAxNDU3Mztcbn1cblxuI1ByaW50QnV0dG9ue1xuICAgIG1hcmdpbjogMjAlIDAgMjAlIDA7XG4gICAgZGlzcGxheTogYmxvY2s7IFxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xufVxuXG4jUmVzZXRCdXR0b24ge1xuICAgIG1hcmdpbjogMjAlIDAgMjAlIDA7XG4gICAgLyogbWFyZ2luLWxlZnQ6IDI2MCU7ICovXG4gICAgZGlzcGxheTogYmxvY2s7IFxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xufVxuXG4uY2FyZC1oZWFkZXIgeyAvKiBDaGFuZ2VzIFJlc3VsdHMgaGVhZGVyICovXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgcGFkZGluZzogMSU7XG59XG5cbiNCb2xkUmVzdWx0IHsgLyogR2l2ZXMgUmVzdWx0cyBCb2xkIHByb3BlcnR5ICovIFxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xufVxuXG4jUmVzdWx0cyB7IC8qIENoYW5nZXMgUmVzdWx0cyBib2R5ICovXG4gICAgbWFyZ2luOiAtMSU7XG59XG5cbiNSZXN1bHRzQm94IHsgLyogQ2hhbmdlcyBSZXN1bHRzIGJveCAqL1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMTI4LCAxMjgsIDEyOCwgMC41MDcpO1xuICAgIGRpc3BsYXk6IGlubGluZS1mbGV4O1xuICAgIG1hcmdpbjogMC41JTtcbiAgICBjb2xvcjogI2UwZTBlMDtcbn1cblxuLnN3aXRjaC1maWVsZCBpbnB1dCB7XG4gICAgcG9zaXRpb246IGFic29sdXRlICFpbXBvcnRhbnQ7XG4gICAgY2xpcDogcmVjdCgwLCAwLCAwLCAwKTtcbiAgICBoZWlnaHQ6IDFweDtcbiAgICB3aWR0aDogMXB4O1xuICAgIGJvcmRlcjogMDtcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xufVxuXG4uc3dpdGNoLWZpZWxkIGxhYmVsIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNDM0ZjVjO1xuICAgIGNvbG9yOiAjZTBlMGUwO1xuICAgIGxpbmUtaGVpZ2h0OiAxO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICBwYWRkaW5nOiA4cHggMTZweDtcbiAgICBtYXJnaW4tcmlnaHQ6IC0xcHg7XG4gICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgwLCAwLCAwLCAwLjIpO1xuICAgIGJveC1zaGFkb3c6IGluc2V0IDFweCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC41MDcpLCAwIDFweCByZ2JhKDI1NSwgMjU1LCAyNTUsIDApO1xuICAgIHRyYW5zaXRpb246IGFsbCAwLjFzIGVhc2UtaW4tb3V0O1xufVxuXG4uc3dpdGNoLWZpZWxkIGxhYmVsOmhvdmVyIHtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG59XG5cbi5zd2l0Y2gtZmllbGQgaW5wdXQ6Y2hlY2tlZCArIGxhYmVsIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjBhZGZmY2U7XG4gICAgYm94LXNoYWRvdzogbm9uZTtcbiAgICBjb2xvcjogcmdiYSgwLCAwLCAwLCAwLjYpO1xufVxuXG4uc3dpdGNoLWZpZWxkIGxhYmVsOmZpcnN0LW9mLXR5cGUge1xuICAgIGJvcmRlci1yYWRpdXM6IDRweCAwIDAgNHB4O1xufVxuXG4uc3dpdGNoLWZpZWxkIGxhYmVsOmxhc3Qtb2YtdHlwZSB7XG4gICAgYm9yZGVyLXJhZGl1czogMCA0cHggNHB4IDA7XG59XG4iXX0= */"]
     });
     /*@__PURE__*/
 
@@ -3908,9 +4049,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     GlasgowComaScaleComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: GlasgowComaScaleComponent,
       selectors: [["app-glasgow-coma-scale"]],
-      decls: 181,
+      decls: 180,
       vars: 4,
-      consts: [["id", "GCS"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], ["for", "eye"], ["data-toggle", "buttons", "id", "eye", 1, "btn-group-vertical", "btn-group-toggle"], [1, "btn", "btn-primary"], ["type", "radio", "name", "options1", "id", "option11", 3, "click"], ["type", "radio", "name", "options1", "id", "option12", 3, "click"], ["type", "radio", "name", "options1", "id", "option13", 3, "click"], ["type", "radio", "name", "options1", "id", "option14", 3, "click"], ["type", "radio", "name", "options1", "id", "option15", 3, "click"], ["for", "verbal"], ["data-toggle", "buttons", "id", "verbal", 1, "btn-group-vertical", "btn-group-toggle"], ["type", "radio", "name", "options2", "id", "option21", 3, "click"], ["type", "radio", "name", "options2", "id", "option22", 3, "click"], ["type", "radio", "name", "options2", "id", "option23", 3, "click"], ["type", "radio", "name", "options2", "id", "option24", 3, "click"], ["type", "radio", "name", "options2", "id", "option25", 3, "click"], ["for", "motor"], ["data-toggle", "buttons", "id", "motor", 1, "btn-group-vertical", "btn-group-toggle"], ["type", "radio", "name", "options3", "id", "option31", 3, "click"], ["type", "radio", "name", "options3", "id", "option32", 3, "click"], ["type", "radio", "name", "options3", "id", "option33", 3, "click"], ["type", "radio", "name", "options3", "id", "option34", 3, "click"], ["type", "radio", "name", "options3", "id", "option35", 3, "click"], ["type", "radio", "name", "options2", "id", "option36", 3, "click"], ["type", "radio", "name", "options2", "id", "option37", 3, "click"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-primary", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-primary", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "txt_4_3"], ["id", "txt_4_0", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["id", "txt_4_1", 2, "display", "none"], ["id", "txt_4_2", 2, "display", "none"], ["type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-outline-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], ["href", "http://www.nursingtimes.net/Journals/2014/10/10/n/p/l/141015Forty-years-on-updating-the-Glasgow-coma-scale.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", "", 1, "alert-link", 2, "white-space", "nowrap"]],
+      consts: [["id", "GCS"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], ["for", "eye"], ["data-toggle", "buttons", "id", "eye", 1, "btn-group-vertical", "btn-group-toggle"], [1, "btn", "btn-info"], ["type", "radio", "name", "options1", "id", "option11", 3, "click"], ["type", "radio", "name", "options1", "id", "option12", 3, "click"], ["type", "radio", "name", "options1", "id", "option13", 3, "click"], ["type", "radio", "name", "options1", "id", "option14", 3, "click"], ["type", "radio", "name", "options1", "id", "option15", 3, "click"], ["for", "verbal"], ["data-toggle", "buttons", "id", "verbal", 1, "btn-group-vertical", "btn-group-toggle"], ["type", "radio", "name", "options2", "id", "option21", 3, "click"], ["type", "radio", "name", "options2", "id", "option22", 3, "click"], ["type", "radio", "name", "options2", "id", "option23", 3, "click"], ["type", "radio", "name", "options2", "id", "option24", 3, "click"], ["type", "radio", "name", "options2", "id", "option25", 3, "click"], ["for", "motor"], ["data-toggle", "buttons", "id", "motor", 1, "btn-group-vertical", "btn-group-toggle"], ["type", "radio", "name", "options3", "id", "option31", 3, "click"], ["type", "radio", "name", "options3", "id", "option32", 3, "click"], ["type", "radio", "name", "options3", "id", "option33", 3, "click"], ["type", "radio", "name", "options3", "id", "option34", 3, "click"], ["type", "radio", "name", "options3", "id", "option35", 3, "click"], ["type", "radio", "name", "options2", "id", "option36", 3, "click"], ["type", "radio", "name", "options2", "id", "option37", 3, "click"], ["role", "group", 1, "btn-group"], ["type", "button", "id", "ResetButton", 1, "btn", "btn-info", 3, "click"], ["type", "button", "id", "PrintButton", 1, "btn", "btn-info", 3, "click"], ["id", "Theme5", 1, "card", "text-center", "bg-dark", 2, "display", "inline-block"], [1, "card-header"], ["id", "Results", 1, "card-body"], ["id", "txt_4_3"], ["id", "txt_4_0", 2, "font-weight", "bold", "font-size", "larger", "display", "none"], ["id", "txt_4_1", 2, "display", "none"], ["id", "txt_4_2", 2, "display", "none"], ["id", "viewMore", "type", "button", "data-toggle", "collapse", "data-target", "#MedText", "aria-expanded", "false", "aria-controls", "MedText", 1, "btn", "btn-info"], ["width", "1em", "height", "1em", "viewBox", "0 0 16 16", "fill", "currentColor", "xmlns", "http://www.w3.org/2000/svg", 1, "bi", "bi-chevron-down"], ["fill-rule", "evenodd", "d", "M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z", "clip-rule", "evenodd"], ["id", "MedText", 1, "collapse", 2, "text-align", "center"], [2, "text-align", "left", "display", "inline-block"], ["href", "http://www.nursingtimes.net/Journals/2014/10/10/n/p/l/141015Forty-years-on-updating-the-Glasgow-coma-scale.pdf", "target", "_blank", "rel", "noopener noreferrer", "download", "", 1, "alert-link", 2, "white-space", "nowrap"]],
       template: function GlasgowComaScaleComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -4249,103 +4390,101 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](85, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](85, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](86, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](86, "div", 29);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](87, "div", 29);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](87, "button", 30);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](88, "button", 30);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GlasgowComaScaleComponent_Template_button_click_88_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GlasgowComaScaleComponent_Template_button_click_87_listener() {
             return ctx.Reset();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](89, "Reset");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](88, "Reset");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](90, "button", 31);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](89, "button", 31);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GlasgowComaScaleComponent_Template_button_click_90_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function GlasgowComaScaleComponent_Template_button_click_89_listener() {
             return ctx.Print();
           });
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](91, "Print");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](90, "Print");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](92, "div", 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](91, "div", 2);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](93, "div", 32);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](92, "div", 32);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](94, "div", 33);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](93, "div", 33);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](95, "Results:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](96, "div", 34);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](97, "p", 35);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](98, "b");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](99, "Please fill out required fields.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](94, "Results:");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](95, "div", 34);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](96, "p", 35);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](97, "b");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](98, "Please fill out required fields.");
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](100, "p", 36);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](101);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](99, "p", 36);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](100);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](101, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](102, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](103, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](103, "p", 37);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](104, "p", 37);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](105, "Glasgow Coma Score");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](104, "Glasgow Coma Score");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](106, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](105, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](107, "p", 38);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](106, "p", 38);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](108);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](107);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](108, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](109, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](110, "br");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](111, "button", 39);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](110, "button", 39);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceSVG"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](112, "svg", 40);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](111, "svg", 40);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](113, "path", 41);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](112, "path", 41);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](114, " View More ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](113, " View More ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](115, "svg", 40);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](114, "svg", 40);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](116, "path", 41);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](115, "path", 41);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -4353,193 +4492,193 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnamespaceHTML"]();
 
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](116, "br");
+
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](117, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](118, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](118, "div", 42);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](119, "div", 42);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](119, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](120, "h3");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](121, "Advice");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](120, "Advice");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](122, "div", 43);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](121, "div", 43);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](123, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](122, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](124, "The GCS score can be indicative of how critically ill a patient is.");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](125, "ul");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](126, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](127, "Trauma patients presenting with GCS <15 warrant close attention and reassessment.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](123, "The GCS score can be indicative of how critically ill a patient is.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](128, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](124, "ul");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](129, "A declining GCS is concerning in any setting and should prompt assessment of the airway and possible intervention.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](125, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](126, "Trauma patients presenting with GCS <15 warrant close attention and reassessment.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](127, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](130, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](131, "Conversely, a GCS of 15 should not be taken as an indication that a patient (trauma or medical) is not critically ill. Decisions about the aggressiveness of the management and treatment plans should be made based on clinical presentation and context and not in any way overridden by the GCS score.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](128, "A declining GCS is concerning in any setting and should prompt assessment of the airway and possible intervention.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](129, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](130, "Conversely, a GCS of 15 should not be taken as an indication that a patient (trauma or medical) is not critically ill. Decisions about the aggressiveness of the management and treatment plans should be made based on clinical presentation and context and not in any way overridden by the GCS score.");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](131, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](132, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](133, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](133, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](134, "h3");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](135, "Management");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](134, "Management");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](136, "div", 43);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](135, "div", 43);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](137, "ul");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](136, "ul");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](138, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](137, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](139, "Clinical management decisions should not be based solely on the GCS score in the acute setting.");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](140, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](141, "If a trauma patient has a GCS \u22648 and there is clinical concern that they are unable to protect their airway or that they have an expected worsening clinical course based on exam or imaging findings, then intubation can be considered.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](138, "Clinical management decisions should not be based solely on the GCS score in the acute setting.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](142, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](139, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](143, "In any patient, a rapidly declining or waxing and waning GCS is concerning and intubation should be considered in the context of the patient's overall clinical picture.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](140, "If a trauma patient has a GCS \u22648 and there is clinical concern that they are unable to protect their airway or that they have an expected worsening clinical course based on exam or imaging findings, then intubation can be considered.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](141, "li");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](142, "In any patient, a rapidly declining or waxing and waning GCS is concerning and intubation should be considered in the context of the patient's overall clinical picture.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](143, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](144, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](145, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](145, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](146, "h3");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](147, "Critical Actions");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](146, "Critical Actions");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](148, "div", 43);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](147, "div", 43);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](149, "ul");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](148, "ul");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](150, "li");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](149, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](151, "Although it has been adopted widely and in a variety of settings, the GCS score is not intended for quantitative use.");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](152, "li");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](153, "Clinical management decisions should not be based solely on the GCS score in the acute setting.");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](150, "Although it has been adopted widely and in a variety of settings, the GCS score is not intended for quantitative use.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](151, "li");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](154, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](155, "From the creators of the GCS:");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](156, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](157, "b");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](158, "\u201CWe have never recommended using the GCS alone, either as a means of monitoring coma, or to assess the severity of brain damage or predict outcome.\u201D");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](159, " (");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](160, "a", 44);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](161, "Teasdale 2014");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](162, ")");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](152, "Clinical management decisions should not be based solely on the GCS score in the acute setting.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](153, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](154, "From the creators of the GCS:");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](155, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](156, "b");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](157, "\u201CWe have never recommended using the GCS alone, either as a means of monitoring coma, or to assess the severity of brain damage or predict outcome.\u201D");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](158, " (");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](159, "a", 44);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](160, "Teasdale 2014");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](161, ")");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](162, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](163, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](164, "br");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](164, "h3");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](165, "h3");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](166, "Formula");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](165, "Formula");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](167, "div", 43);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](166, "div", 43);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](168, "p");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](167, "p");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](169, "The Glasgow Coma ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](168, "The Glasgow Coma ");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](170, "b");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](169, "b");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](171, "Score");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](172, " is calculated by addition of the total points selected under each component (eye, verbal, motor) below, e.g. \"15 points\".");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](170, "Score");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](173, "p");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](174, "The Glasgow Coma ");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](175, "b");
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](176, "Scale");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](171, " is calculated by addition of the total points selected under each component (eye, verbal, motor) below, e.g. \"15 points\".");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](177, " is comprised of the individual components, e.g. \"E(4) V(5) M (6)\"");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](172, "p");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](173, "The Glasgow Coma ");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](174, "b");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](175, "Scale");
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](176, " is comprised of the individual components, e.g. \"E(4) V(5) M (6)\"");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](177, "br");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](178, "br");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](179, "br");
-
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](180, "div", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](179, "div", 3);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -4549,7 +4688,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         if (rf & 2) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](101);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](100);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("", ctx.pointstxt, " ");
 
@@ -4558,7 +4697,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate3"]("E(", ctx.eye, ") V(", ctx.verbal, ") M(", ctx.motor, ")");
         }
       },
-      styles: ["#GCS[_ngcontent-%COMP%] { \n    text-align: center; \n}\n\n#eye[_ngcontent-%COMP%] {\n    display: inline-block;\n}\n\n#verbal[_ngcontent-%COMP%] {\n    display: inline-block;\n}\n\n#motor[_ngcontent-%COMP%] {\n    display: inline-block;\n}\n\n.btn-primary[_ngcontent-%COMP%] {\n    color: #fff;\n    background-color: #375a7f;\n    border-color: #375a7f;\n}\n\n#option11[_ngcontent-%COMP%] {\n    background-color: red;\n}\n\nlabel[_ngcontent-%COMP%] {\n    float: left;\n    clear: left;\n    width: 400px;\n    text-align: left;\n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh5[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\n#PrintButton[_ngcontent-%COMP%]{\n    margin: 20% 0 20% 0;\n    display: block; \n    justify-content: center;\n}\n\n#ResetButton[_ngcontent-%COMP%] {\n    margin: 20% 0 20% 0;\n    \n    display: block; \n    justify-content: center;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    font-size: large;\n    padding: 1%;\n}\n\n#Levels[_ngcontent-%COMP%] {  \n    font-weight: bold; \n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -1%;\n}\n\n#Theme5[_ngcontent-%COMP%] { \n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0.5%;\n    color: #e0e0e0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2xhc2dvdy1jb21hLXNjYWxlL2dsYXNnb3ctY29tYS1zY2FsZS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQSxPQUFPLDZDQUE2QztJQUNoRCxrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxxQkFBcUI7QUFDekI7O0FBRUE7SUFDSSxxQkFBcUI7QUFDekI7O0FBRUE7SUFDSSxxQkFBcUI7QUFDekI7O0FBRUE7SUFDSSxXQUFXO0lBQ1gseUJBQXlCO0lBQ3pCLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLFdBQVc7SUFDWCxXQUFXO0lBQ1gsWUFBWTtJQUNaLGdCQUFnQjtBQUNwQjs7QUFFQSxJQUFJLGtCQUFrQjtJQUNsQixZQUFZO0FBQ2hCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQSxLQUFLLHlCQUF5QjtJQUMxQix3QkFBd0I7QUFDNUI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBO0lBQ0ksbUJBQW1CO0lBQ25CLGNBQWM7SUFDZCx1QkFBdUI7QUFDM0I7O0FBRUE7SUFDSSxtQkFBbUI7SUFDbkIsdUJBQXVCO0lBQ3ZCLGNBQWM7SUFDZCx1QkFBdUI7QUFDM0I7O0FBRUEsZUFBZSwyQkFBMkI7SUFDdEMsaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixXQUFXO0FBQ2Y7O0FBRUEsVUFBVSxnQ0FBZ0M7SUFDdEMsaUJBQWlCO0FBQ3JCOztBQUVBLFdBQVcseUJBQXlCO0lBQ2hDLFdBQVc7QUFDZjs7QUFFQSxVQUFVLHdCQUF3QjtJQUM5Qiw0Q0FBNEM7SUFDNUMsb0JBQW9CO0lBQ3BCLFlBQVk7SUFDWixjQUFjO0FBQ2xCIiwiZmlsZSI6InNyYy9hcHAvZ2xhc2dvdy1jb21hLXNjYWxlL2dsYXNnb3ctY29tYS1zY2FsZS5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXG4jR0NTIHsgLyogQWxpZ25zIGNvbnRlbnQgdG8gdGhlIGNlbnRlciBvZiB0aGUgc2l0ZSAqL1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjsgXG59XG5cbiNleWUge1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbn1cblxuI3ZlcmJhbCB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xufVxuXG4jbW90b3Ige1xuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbn1cblxuLmJ0bi1wcmltYXJ5IHtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMzc1YTdmO1xuICAgIGJvcmRlci1jb2xvcjogIzM3NWE3Zjtcbn1cblxuI29wdGlvbjExIHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZWQ7XG59XG5cbmxhYmVsIHtcbiAgICBmbG9hdDogbGVmdDtcbiAgICBjbGVhcjogbGVmdDtcbiAgICB3aWR0aDogNDAwcHg7XG4gICAgdGV4dC1hbGlnbjogbGVmdDtcbn1cblxucCB7IC8qIENvbXBhY3RzIHRleHQgKi9cbiAgICBtYXJnaW46IDAuMSU7XG59XG5cbmgxIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmgzIHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbmg1IHsgLyogQ2hhbmdlcyBoZWFkZXIgY29sb3IgKi9cbiAgICBjb2xvcjogcmdiKDMzLCAxMTgsIDE3NSk7XG59XG5cbiNQcmludEJ1dHRvbntcbiAgICBtYXJnaW46IDIwJSAwIDIwJSAwO1xuICAgIGRpc3BsYXk6IGJsb2NrOyBcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cblxuI1Jlc2V0QnV0dG9uIHtcbiAgICBtYXJnaW46IDIwJSAwIDIwJSAwO1xuICAgIC8qIG1hcmdpbi1sZWZ0OiAyNjAlOyAqL1xuICAgIGRpc3BsYXk6IGJsb2NrOyBcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbn1cblxuLmNhcmQtaGVhZGVyIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGhlYWRlciAqL1xuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xuICAgIGZvbnQtc2l6ZTogbGFyZ2U7XG4gICAgcGFkZGluZzogMSU7XG59XG5cbiNMZXZlbHMgeyAvKiBHaXZlcyBSZXN1bHRzIEJvbGQgcHJvcGVydHkgKi8gXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7IFxufVxuXG4jUmVzdWx0cyB7IC8qIENoYW5nZXMgUmVzdWx0cyBib2R5ICovXG4gICAgbWFyZ2luOiAtMSU7XG59XG5cbiNUaGVtZTUgeyAvKiBDaGFuZ2VzIFJlc3VsdHMgYm94ICovXG4gICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgxMjgsIDEyOCwgMTI4LCAwLjUwNyk7XG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XG4gICAgbWFyZ2luOiAwLjUlO1xuICAgIGNvbG9yOiAjZTBlMGUwO1xufVxuIl19 */"]
+      styles: ["#GCS[_ngcontent-%COMP%] { \n    text-align: center; \n}\n\n#viewMore[_ngcontent-%COMP%] {\n    position: -webkit-sticky;\n    position: sticky;\n    top: 225px;\n    z-index: 1;\n}\n\n.btn-info[_ngcontent-%COMP%]:not(:disabled):not(.disabled):active, .btn-info[_ngcontent-%COMP%]:not(:disabled):not(.disabled).active, .show[_ngcontent-%COMP%]    > .btn-info.dropdown-toggle[_ngcontent-%COMP%] {\n    color: #fff;\n    background-color: #055286;\n    border-color: #014573;\n}\n\n#eye[_ngcontent-%COMP%] {\n    display: inline-block;\n}\n\n#verbal[_ngcontent-%COMP%] {\n    display: inline-block;\n}\n\n#motor[_ngcontent-%COMP%] {\n    display: inline-block;\n}\n\n.btn-primary[_ngcontent-%COMP%] {\n    color: #fff;\n    background-color: #375a7f;\n    border-color: #375a7f;\n}\n\n#option11[_ngcontent-%COMP%] {\n    background-color: red;\n}\n\nlabel[_ngcontent-%COMP%] {\n    float: left;\n    clear: left;\n    width: 400px;\n    text-align: left;\n}\n\np[_ngcontent-%COMP%] { \n    margin: 0.1%;\n}\n\nh1[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh3[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\nh5[_ngcontent-%COMP%] { \n    color: rgb(33, 118, 175);\n}\n\n#PrintButton[_ngcontent-%COMP%]{\n    margin: 20% 0 20% 0;\n    display: block; \n    justify-content: center;\n}\n\n#ResetButton[_ngcontent-%COMP%] {\n    margin: 20% 0 20% 0;\n    \n    display: block; \n    justify-content: center;\n}\n\n.card-header[_ngcontent-%COMP%] { \n    font-weight: bold;\n    font-size: large;\n    padding: 1%;\n}\n\n#Levels[_ngcontent-%COMP%] {  \n    font-weight: bold; \n}\n\n#Results[_ngcontent-%COMP%] { \n    margin: -1%;\n}\n\n#Theme5[_ngcontent-%COMP%] { \n    position: -webkit-sticky;\n    position: sticky;\n    top: 55px;\n    border: 1px solid rgba(128, 128, 128, 0.507);\n    display: inline-flex;\n    margin: 0.5%;\n    color: #e0e0e0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZ2xhc2dvdy1jb21hLXNjYWxlL2dsYXNnb3ctY29tYS1zY2FsZS5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFDQSxPQUFPLDZDQUE2QztJQUNoRCxrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSx3QkFBZ0I7SUFBaEIsZ0JBQWdCO0lBQ2hCLFVBQVU7SUFDVixVQUFVO0FBQ2Q7O0FBRUE7SUFDSSxXQUFXO0lBQ1gseUJBQXlCO0lBQ3pCLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLHFCQUFxQjtBQUN6Qjs7QUFFQTtJQUNJLFdBQVc7SUFDWCx5QkFBeUI7SUFDekIscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0kscUJBQXFCO0FBQ3pCOztBQUVBO0lBQ0ksV0FBVztJQUNYLFdBQVc7SUFDWCxZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCOztBQUVBLElBQUksa0JBQWtCO0lBQ2xCLFlBQVk7QUFDaEI7O0FBRUEsS0FBSyx5QkFBeUI7SUFDMUIsd0JBQXdCO0FBQzVCOztBQUVBLEtBQUsseUJBQXlCO0lBQzFCLHdCQUF3QjtBQUM1Qjs7QUFFQSxLQUFLLHlCQUF5QjtJQUMxQix3QkFBd0I7QUFDNUI7O0FBRUE7SUFDSSxtQkFBbUI7SUFDbkIsY0FBYztJQUNkLHVCQUF1QjtBQUMzQjs7QUFFQTtJQUNJLG1CQUFtQjtJQUNuQix1QkFBdUI7SUFDdkIsY0FBYztJQUNkLHVCQUF1QjtBQUMzQjs7QUFFQSxlQUFlLDJCQUEyQjtJQUN0QyxpQkFBaUI7SUFDakIsZ0JBQWdCO0lBQ2hCLFdBQVc7QUFDZjs7QUFFQSxVQUFVLGdDQUFnQztJQUN0QyxpQkFBaUI7QUFDckI7O0FBRUEsV0FBVyx5QkFBeUI7SUFDaEMsV0FBVztBQUNmOztBQUVBLFVBQVUsd0JBQXdCO0lBQzlCLHdCQUFnQjtJQUFoQixnQkFBZ0I7SUFDaEIsU0FBUztJQUNULDRDQUE0QztJQUM1QyxvQkFBb0I7SUFDcEIsWUFBWTtJQUNaLGNBQWM7QUFDbEIiLCJmaWxlIjoic3JjL2FwcC9nbGFzZ293LWNvbWEtc2NhbGUvZ2xhc2dvdy1jb21hLXNjYWxlLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJcbiNHQ1MgeyAvKiBBbGlnbnMgY29udGVudCB0byB0aGUgY2VudGVyIG9mIHRoZSBzaXRlICovXG4gICAgdGV4dC1hbGlnbjogY2VudGVyOyBcbn1cblxuI3ZpZXdNb3JlIHtcbiAgICBwb3NpdGlvbjogc3RpY2t5O1xuICAgIHRvcDogMjI1cHg7XG4gICAgei1pbmRleDogMTtcbn1cblxuLmJ0bi1pbmZvOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpOmFjdGl2ZSwgLmJ0bi1pbmZvOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpLmFjdGl2ZSwgLnNob3cgPiAuYnRuLWluZm8uZHJvcGRvd24tdG9nZ2xlIHtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDU1Mjg2O1xuICAgIGJvcmRlci1jb2xvcjogIzAxNDU3Mztcbn1cblxuI2V5ZSB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xufVxuXG4jdmVyYmFsIHtcbiAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG59XG5cbiNtb3RvciB7XG4gICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xufVxuXG4uYnRuLXByaW1hcnkge1xuICAgIGNvbG9yOiAjZmZmO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICMzNzVhN2Y7XG4gICAgYm9yZGVyLWNvbG9yOiAjMzc1YTdmO1xufVxuXG4jb3B0aW9uMTEge1xuICAgIGJhY2tncm91bmQtY29sb3I6IHJlZDtcbn1cblxubGFiZWwge1xuICAgIGZsb2F0OiBsZWZ0O1xuICAgIGNsZWFyOiBsZWZ0O1xuICAgIHdpZHRoOiA0MDBweDtcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG5wIHsgLyogQ29tcGFjdHMgdGV4dCAqL1xuICAgIG1hcmdpbjogMC4xJTtcbn1cblxuaDEgeyAvKiBDaGFuZ2VzIGhlYWRlciBjb2xvciAqL1xuICAgIGNvbG9yOiByZ2IoMzMsIDExOCwgMTc1KTtcbn1cblxuaDMgeyAvKiBDaGFuZ2VzIGhlYWRlciBjb2xvciAqL1xuICAgIGNvbG9yOiByZ2IoMzMsIDExOCwgMTc1KTtcbn1cblxuaDUgeyAvKiBDaGFuZ2VzIGhlYWRlciBjb2xvciAqL1xuICAgIGNvbG9yOiByZ2IoMzMsIDExOCwgMTc1KTtcbn1cblxuI1ByaW50QnV0dG9ue1xuICAgIG1hcmdpbjogMjAlIDAgMjAlIDA7XG4gICAgZGlzcGxheTogYmxvY2s7IFxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xufVxuXG4jUmVzZXRCdXR0b24ge1xuICAgIG1hcmdpbjogMjAlIDAgMjAlIDA7XG4gICAgLyogbWFyZ2luLWxlZnQ6IDI2MCU7ICovXG4gICAgZGlzcGxheTogYmxvY2s7IFxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xufVxuXG4uY2FyZC1oZWFkZXIgeyAvKiBDaGFuZ2VzIFJlc3VsdHMgaGVhZGVyICovXG4gICAgZm9udC13ZWlnaHQ6IGJvbGQ7XG4gICAgZm9udC1zaXplOiBsYXJnZTtcbiAgICBwYWRkaW5nOiAxJTtcbn1cblxuI0xldmVscyB7IC8qIEdpdmVzIFJlc3VsdHMgQm9sZCBwcm9wZXJ0eSAqLyBcbiAgICBmb250LXdlaWdodDogYm9sZDsgXG59XG5cbiNSZXN1bHRzIHsgLyogQ2hhbmdlcyBSZXN1bHRzIGJvZHkgKi9cbiAgICBtYXJnaW46IC0xJTtcbn1cblxuI1RoZW1lNSB7IC8qIENoYW5nZXMgUmVzdWx0cyBib3ggKi9cbiAgICBwb3NpdGlvbjogc3RpY2t5O1xuICAgIHRvcDogNTVweDtcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDEyOCwgMTI4LCAxMjgsIDAuNTA3KTtcbiAgICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcbiAgICBtYXJnaW46IDAuNSU7XG4gICAgY29sb3I6ICNlMGUwZTA7XG59XG4iXX0= */"]
     });
     /*@__PURE__*/
 
@@ -4728,7 +4867,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       selectors: [["app-home"]],
       decls: 24,
       vars: 0,
-      consts: [["id", "Home"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], ["role", "group", 1, "btn-group-vertical"], ["type", "button", "routerLink", "/curb65", "routerLinkActive", "active", 1, "btn", "btn-primary"], ["type", "button", "routerLink", "/covid19", "routerLinkActive", "active", 1, "btn", "btn-primary"], ["type", "button", "routerLink", "/cstat", "routerLinkActive", "active", 1, "btn", "btn-primary"], ["type", "button", "routerLink", "/bmi-bsa", "routerLinkActive", "active", 1, "btn", "btn-primary"], ["type", "button", "routerLink", "/glasgow-coma-scale", "routerLinkActive", "active", 1, "btn", "btn-primary"]],
+      consts: [["id", "Home"], [1, "container"], [1, "row"], [1, "col-sm-2"], [1, "col-sm-8"], ["role", "group", 1, "btn-group-vertical"], ["type", "button", "routerLink", "/curb65", "routerLinkActive", "active", 1, "btn", "btn-info"], ["type", "button", "routerLink", "/covid19", "routerLinkActive", "active", 1, "btn", "btn-info"], ["type", "button", "routerLink", "/cstat", "routerLinkActive", "active", 1, "btn", "btn-info"], ["type", "button", "routerLink", "/bmi-bsa", "routerLinkActive", "active", 1, "btn", "btn-info"], ["type", "button", "routerLink", "/glasgow-coma-scale", "routerLinkActive", "active", 1, "btn", "btn-info"]],
       template: function HomeComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
